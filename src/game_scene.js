@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import Background from './background.js';
+import Birdie from './birdie.js';
+import Plateau from './plateau.js';
 import TrainCar from './train_car.js';
 import Player from './player.js';
 import Foreground from './foreground.js';
@@ -9,33 +11,42 @@ export default class GameScene extends Phaser.Scene {
   constructor (config) {
     super(config);
     this.background = new Background(this);
-    this.trainCar = new TrainCar(this);
+    this.birdie = new Birdie(this);
+    this.plateau = new Plateau(this);
     this.player = new Player(this);
+    this.trainCar = new TrainCar(this, this.player);
     this.foreground = new Foreground(this);
     this.score = new Score(this);
   }
 
   preload() {
     this.background.preload();
-    this.trainCar.preload();
+    this.birdie.preload();
+    this.plateau.preload();
     this.player.preload();
+    this.trainCar.preload();
     this.foreground.preload();
     this.score.preload();
   }
 
-  create(data) {
-    this.background.create(data);
-    this.trainCar.create(data);
-    this.player.create(data);
-    this.foreground.create(data);
-    this.score.create(data);
+  create() {
+    this.background.create();
+    this.birdie.create();
+    this.plateau.create();
+    this.trainCar.create();
+    this.player.create();
+    this.foreground.create();
+    this.score.create();
+
     this.physics.add.collider(this.player.getPlayer(), this.trainCar.getPlatforms());
   }
 
-  update(time, delta) {
-    this.background.update(time, delta);
-    this.player.update(time, delta);
-    this.score.update(time, delta);
-    this.foreground.update(time, delta);
+  update() {
+    this.background.update();
+    this.birdie.update();
+    this.plateau.update();
+    this.player.update();
+    this.score.update();
+    this.foreground.update();
   }
 }

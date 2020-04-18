@@ -8,8 +8,8 @@ const config = {
     width: 400,
     height: 225
   },
-  type: Phaser.AUTO,
   pixelArt: true,
+  type: Phaser.AUTO,
   physics: {
     default: 'arcade',
     arcade: {

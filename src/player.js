@@ -13,6 +13,7 @@ export default class Player {
   create () {
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.player = this.game.physics.add.sprite(100, 100, 'player');
+    this.player.setDepth(5);
     this.player.setBounce(0.1);
     this.player.setCollideWorldBounds(true);
 

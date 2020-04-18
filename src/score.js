@@ -1,6 +1,6 @@
 const style = {
   font: '11px Courier',
-  fill: '#50785b',
+  fill: '#40674a',
   align: 'right'
 }
 
@@ -12,9 +12,11 @@ export default class Score {
   }
 
   preload () {
+    //this.game.load.bitmapFont('font', '../assets/font.png', '../assets/font.fnt');
   }
 
   create () {
+    //this.game.add.bitmapText(200, 2, 'font', '$1,234,567,890', 14);
     this.scoreText = this.game.add.text(398, 2, this.getScoreText(), style);
     this.scoreText.setOrigin(1.0, 0.0);
     this.updateScore();
