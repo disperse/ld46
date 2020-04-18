@@ -20,6 +20,7 @@ export default class GameScene extends Phaser.Scene {
     this.trainCar.preload();
     this.player.preload();
     this.foreground.preload();
+    this.score.preload();
   }
 
   create(data) {
@@ -28,7 +29,6 @@ export default class GameScene extends Phaser.Scene {
     this.player.create(data);
     this.foreground.create(data);
     this.score.create(data);
-
     this.physics.add.collider(this.player.getPlayer(), this.trainCar.getPlatforms());
   }
 

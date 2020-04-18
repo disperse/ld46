@@ -1,5 +1,5 @@
 const style = {
-  font: '16px Courier',
+  font: '11px Courier',
   fill: '#50785b',
   align: 'right'
 }
@@ -15,7 +15,7 @@ export default class Score {
   }
 
   create () {
-    this.scoreText = this.game.add.text(395, 5, this.getScoreText(), style);
+    this.scoreText = this.game.add.text(398, 2, this.getScoreText(), style);
     this.scoreText.setOrigin(1.0, 0.0);
     this.updateScore();
   }
