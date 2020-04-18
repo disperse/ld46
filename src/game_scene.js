@@ -36,5 +36,6 @@ export default class GameScene extends Phaser.Scene {
     this.background.update(time, delta);
     this.player.update(time, delta);
     this.score.update(time, delta);
+    this.foreground.update(time, delta);
   }
 }

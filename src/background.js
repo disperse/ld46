@@ -4,11 +4,11 @@ export default class Background {
   }
 
   preload () {
-    this.game.load.image('background', '../assets/background_2400x450.png');
+    this.game.load.image('background', '../assets/background_1200x225.png');
   }
 
   create () {
-    this.tileSprite = this.game.add.tileSprite(400, 225, 800, 450, 'background');
+    this.tileSprite = this.game.add.tileSprite(200, 112, 400, 225, 'background');
   }
 
   update () {

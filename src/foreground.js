@@ -1,14 +1,31 @@
 export default class Foreground {
   constructor (game) {
     this.game = game;
-    console.log(this.game);
+    this.bushes = [];
+    this.updateCount = 0;
   }
 
   preload () {
-    this.game.load.image('bush', '../assets/bush_90x90.png');
+    this.game.load.image('bush', '../assets/bush_45x45.png');
   }
 
   create () {
-    this.game.add.sprite(100, 405, 'bush');
+  }
+
+  update (time, delta) {
+    if (this.updateCount % 30 === 0) {
+      if (Math.random() < 0.3) {
+        this.bushes.push(this.game.add.sprite(450, 203, 'bush'));
+      }
+    }
+    for (let i = 0; i < this.bushes.length; i++) {
+      let bush = this.bushes[i];
+      this.bushes[i].x -= 5;
+      if (bush.x < -45) {
+        bush.destroy();
+        this.bushes.splice(i, 1);
+      }
+    }
+    this.updateCount++;
   }
 }

@@ -4,12 +4,12 @@ export default class TrainCar {
   }
 
   preload () {
-    this.game.load.image('ground', 'assets/platform.png');
+    this.game.load.image('ground', 'assets/platform_200x2.png');
   }
 
   create () {
     this.platforms = this.game.physics.add.staticGroup();
-    this.platforms.create(400, 400, 'ground').setScale(2).refreshBody();
+    this.platforms.create(200, 200, 'ground').setScale(2).refreshBody();
   }
 
   getPlatforms() {
