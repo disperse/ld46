@@ -16,7 +16,8 @@ export default class Player {
     this.player.setDepth(5);
     this.player.setBounce(0.1);
     this.player.setSize(10, 15);
-    this.player.setCollideWorldBounds(true);
+    this.player.setCollideWorldBounds(false);
+    // this.player.events.onOutOf
 
     this.game.anims.create({
       key: 'left',

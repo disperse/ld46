@@ -12,7 +12,7 @@ export default class Foreground {
 
   create () {
     this.foreground = this.game.add.tileSprite(200, 203, 640, 64, 'foreground');
-    this.foreground.setDepth(6);
+    this.foreground.setDepth(7);
     this.foreground.setScrollFactor(0);
   }
 
@@ -20,7 +20,7 @@ export default class Foreground {
     if (this.updateCount % 30 === 0) {
       if (Math.random() < 0.5) {
         let bush = this.game.add.sprite(450, 180 + (Math.random() * 40), 'bush');
-        bush.setDepth(7);
+        bush.setDepth(8);
         bush.setScrollFactor(0);
         if (Math.random() < 0.5) bush.flipX = true;
         this.bushes.push(bush);

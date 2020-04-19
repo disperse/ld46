@@ -4,10 +4,12 @@ import Birdie from './birdie.js';
 import Plateau from './plateau.js';
 import TrainCars from './train_car.js';
 import Crates from './crates.js';
+import Wheels from './wheels.js';
 import Player from './player.js';
 import Foreground from './foreground.js';
 import Score from './score.js';
 import Health from './health.js';
+import Ammo from './ammo.js';
 
 export default class GameScene extends Phaser.Scene {
   constructor (config) {
@@ -17,10 +19,12 @@ export default class GameScene extends Phaser.Scene {
     this.plateau = new Plateau(this);
     this.player = new Player(this);
     this.crates = new Crates(this, this.player);
-    this.trainCars = new TrainCars(this, this.player, this.crates);
+    this.wheels = new Wheels(this);
+    this.trainCars = new TrainCars(this, this.player, this.crates, this.wheels);
     this.foreground = new Foreground(this);
     this.score = new Score(this);
     this.health = new Health(this);
+    this.ammo = new Ammo(this);
   }
 
   preload() {
@@ -31,10 +35,12 @@ export default class GameScene extends Phaser.Scene {
     this.plateau.preload();
     this.player.preload();
     this.crates.preload();
+    this.wheels.preload();
     this.trainCars.preload();
     this.foreground.preload();
     this.score.preload();
     this.health.preload();
+    this.ammo.preload();
   }
 
   create() {
@@ -50,6 +56,7 @@ export default class GameScene extends Phaser.Scene {
     this.foreground.create();
     this.score.create();
     this.health.create();
+    this.ammo.create();
 
     for (let i = 0; i < 8; i++) {
       let x = 200 + (i * 320);
@@ -70,5 +77,7 @@ export default class GameScene extends Phaser.Scene {
     this.score.update();
     this.foreground.update();
     this.health.update();
+    this.ammo.update();
+    this.wheels.update();
   }
 }

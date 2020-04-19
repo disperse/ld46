@@ -6,7 +6,7 @@ export default class Crates {
 
   preload () {
     this.game.load.image('crate', '../assets/crate_20x20.png');
-    this.game.load.image('crate2', '../assets/crate_40x20.png');
+    this.game.load.image('crate2', '../assets/crate-3_40x20.png');
   }
 
   create () {

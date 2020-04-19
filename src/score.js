@@ -8,7 +8,7 @@ export default class Score {
 
   constructor (game) {
     this.game = game;
-    this.score = 1234567890;
+    this.score = 10000;
   }
 
   preload () {
@@ -24,6 +24,7 @@ export default class Score {
   }
 
   update () {
+    this.addScore(50);
   }
 
   addScore(s) {

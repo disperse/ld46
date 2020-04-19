@@ -1,8 +1,9 @@
 export default class TrainCars {
-  constructor (game, player, crates) {
+  constructor (game, player, crates, wheels) {
     this.game = game;
     this.player = player;
     this.crates = crates;
+    this.wheels = wheels;
   }
 
   preload () {
@@ -15,10 +16,14 @@ export default class TrainCars {
   }
 
   addTrainCar (x) {
-    let trainCar = this.game.add.sprite(x, 135, 'train_car')
-    this.platforms.create(x, 187, 'ground').setScale(1.5).refreshBody();
+    let trainCar = this.game.add.sprite(x, 125, 'train_car')
+    this.platforms.create(x, 177, 'ground').setScale(1.5).refreshBody();
     trainCar.setDepth(4);
-    this.crates.addCrate(x, 176, 'long');
+    this.crates.addCrate(x, 166, 'long');
+    this.wheels.addWheel(x-115, 190);
+    this.wheels.addWheel(x-80, 190);
+    this.wheels.addWheel(x+115, 190);
+    this.wheels.addWheel(x+80, 190);
   }
 
   getPlatformsStaticGroup () {
