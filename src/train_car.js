@@ -74,18 +74,24 @@ export default class TrainCars {
     trainCar.setDepth(4);
     this.platforms.create(x, 177, 'ground').setScale(1.5).refreshBody(); // floor
     this.platforms.create(x, 64, 'ground').setScale(1.5).refreshBody(); // ceiling
-    const hitch = this.game.add.sprite(x - 165, 177, 'hitch');
-    hitch.setDepth(4);
+    if (x > 200) {
+      const hitch = this.game.add.sprite(x - 165, 177, 'hitch');
+      hitch.setDepth(4);
+    }
     let startX = x - 120;
     for (let i = 0; i < layout.crates.length; i++) {
       for (let j = 0; j < layout.crates[i].length; j++) {
         this.crates.addCrate(startX + (i * 20), 166 - (j * 20), 'short');
       }
     }
+    this.wheels.addWheel(x-98, 197);
+    this.wheels.addWheel(x+98, 197);
+    /*
     this.wheels.addWheel(x-115, 190);
     this.wheels.addWheel(x-80, 190);
     this.wheels.addWheel(x+115, 190);
     this.wheels.addWheel(x+80, 190);
+    */
   }
 
   getPlatformsStaticGroup () {
