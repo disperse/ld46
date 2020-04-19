@@ -16,7 +16,8 @@ export default class Foreground {
     if (this.updateCount % 30 === 0) {
       if (Math.random() < 0.2) {
         let bush = this.game.add.sprite(450, 203, 'bush');
-        bush.setDepth(5);
+        bush.setDepth(6);
+        bush.setScrollFactor(0);
         if (Math.random() < 0.5) bush.flipX = true;
         this.bushes.push(bush);
       }

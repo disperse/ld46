@@ -19,6 +19,7 @@ export default class Score {
     //this.game.add.bitmapText(200, 2, 'font', '$1,234,567,890', 14);
     this.scoreText = this.game.add.text(398, 2, this.getScoreText(), style);
     this.scoreText.setOrigin(1.0, 0.0);
+    this.scoreText.setScrollFactor(0);
     this.updateScore();
   }
 

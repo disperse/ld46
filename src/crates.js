@@ -2,22 +2,22 @@ export default class Crates {
   constructor (game, player) {
     this.game = game;
     this.player = player;
-    this.crates = this.game.physics.add.staticGroup();
   }
 
   preload () {
-    this.game.load.image('crate', 'assets/crate_32x32.png');
+    this.game.load.image('crate', '../assets/crate_24x24.png');
   }
 
   create () {
-    this.game.physics.add.collider(this.player, this.crates);
+    this.crates = this.game.physics.add.staticGroup();
   }
 
-  getCrates() {
+  getCratesStaticGroup() {
     return this.crates;
   }
 
   addCrate (x, y) {
-    this.crates.create(x, y, 'crate');
+    let crate = this.crates.create(x, y, 'crate');
+    crate.setDepth(5);
   }
 }

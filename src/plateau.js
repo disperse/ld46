@@ -11,6 +11,7 @@ export default class Plateau {
   create () {
     this.tileSprite = this.game.add.tileSprite(200, 110, 400, 225, 'plateau');
     this.tileSprite.setDepth(2);
+    this.tileSprite.setScrollFactor(0);
   }
 
   update () {

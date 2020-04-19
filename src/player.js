@@ -15,6 +15,7 @@ export default class Player {
     this.player = this.game.physics.add.sprite(100, 100, 'player');
     this.player.setDepth(5);
     this.player.setBounce(0.1);
+    this.player.setSize(10, 15);
     this.player.setCollideWorldBounds(true);
 
     this.game.anims.create({
@@ -56,7 +57,7 @@ export default class Player {
     }
   }
 
-  getPlayer() {
+  getBody() {
     return this.player;
   }
 }
