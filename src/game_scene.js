@@ -7,6 +7,7 @@ import Crates from './crates.js';
 import Player from './player.js';
 import Foreground from './foreground.js';
 import Score from './score.js';
+import Health from './health.js';
 
 export default class GameScene extends Phaser.Scene {
   constructor (config) {
@@ -19,9 +20,12 @@ export default class GameScene extends Phaser.Scene {
     this.trainCars = new TrainCars(this, this.player, this.crates);
     this.foreground = new Foreground(this);
     this.score = new Score(this);
+    this.health = new Health(this);
   }
 
   preload() {
+    this.icons = this.load.spritesheet('icons', 'assets/icons_128x48.png', { frameWidth: 16, frameHeight: 16 });
+
     this.background.preload();
     this.birdie.preload();
     this.plateau.preload();
@@ -30,6 +34,7 @@ export default class GameScene extends Phaser.Scene {
     this.trainCars.preload();
     this.foreground.preload();
     this.score.preload();
+    this.health.preload();
   }
 
   create() {
@@ -44,6 +49,7 @@ export default class GameScene extends Phaser.Scene {
     this.player.create();
     this.foreground.create();
     this.score.create();
+    this.health.create();
 
     for (let i = 0; i < 8; i++) {
       let x = 200 + (i * 320);
@@ -63,5 +69,6 @@ export default class GameScene extends Phaser.Scene {
     this.player.update();
     this.score.update();
     this.foreground.update();
+    this.health.update();
   }
 }

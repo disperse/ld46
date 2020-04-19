@@ -15,10 +15,16 @@ export default class TrainCars {
   }
 
   addTrainCar (x) {
-    let trainCar = this.game.add.sprite(x, 125, 'train_car')
-    this.platforms.create(x, 177, 'ground').setScale(1.5).refreshBody();
+    let trainCar = this.game.add.sprite(x, 135, 'train_car')
+    this.platforms.create(x, 187, 'ground').setScale(1.5).refreshBody();
     trainCar.setDepth(4);
-    this.crates.addCrate(x, 165);
+    this.crates.addCrate((x - 24), 151);
+    this.crates.addCrate((x - 24), 175);
+    this.crates.addCrate(x, 151);
+    this.crates.addCrate(x, 175);
+    this.crates.addCrate((x + 24) , 175);
+    this.crates.addCrate((x + 24) , 151);
+    this.crates.addCrate((x + 48) , 175);
   }
 
   getPlatformsStaticGroup () {
