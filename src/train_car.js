@@ -59,8 +59,9 @@ export default class TrainCars {
 
   preload () {
     this.game.load.image('passenger_car', '../assets/passenger-car_300x125.png');
-    this.game.load.image('ground', '../assets/platform_200x2.png');
     this.game.load.spritesheet('cargo_car', '../assets/cargo-car_2400x250.png', { frameWidth: 300, frameHeight: 125 });
+    this.game.load.image('ground', '../assets/platform_200x2.png');
+    this.game.load.image('hitch', '../assets/hitch_30x20.png');
   }
 
   create () {
@@ -70,9 +71,11 @@ export default class TrainCars {
   addTrainCar (x, layoutIndex) {
     let layout = layouts[layoutIndex];
     let trainCar = this.game.add.sprite(x, 125, layout.sprite, layout.spriteIndex);
+    trainCar.setDepth(4);
     this.platforms.create(x, 177, 'ground').setScale(1.5).refreshBody(); // floor
     this.platforms.create(x, 64, 'ground').setScale(1.5).refreshBody(); // ceiling
-    trainCar.setDepth(4);
+    const hitch = this.game.add.sprite(x - 165, 177, 'hitch');
+    hitch.setDepth(4);
     let startX = x - 120;
     for (let i = 0; i < layout.crates.length; i++) {
       for (let j = 0; j < layout.crates[i].length; j++) {

@@ -1,6 +1,7 @@
 const style = {
-  font: '11px courier',
-  fill: '#40674a',
+  font: '13px courier',
+  /* fill: '#305639',*/
+  fill: '#000',
   align: 'right'
 }
 
