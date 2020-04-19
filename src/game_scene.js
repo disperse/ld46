@@ -10,6 +10,7 @@ import Foreground from './foreground.js';
 import Score from './score.js';
 import Health from './health.js';
 import Ammo from './ammo.js';
+import Saboteur from './saboteur.js';
 import GreyscalePipeline from './greyscale_pipeline';
 
 export default class GameScene extends Phaser.Scene {
@@ -26,6 +27,7 @@ export default class GameScene extends Phaser.Scene {
     this.foreground = new Foreground(this);
     this.score = new Score(this);
     this.ammo = new Ammo(this);
+    this.saboteur = new Saboteur(this)
 
   }
 
@@ -66,6 +68,7 @@ export default class GameScene extends Phaser.Scene {
     this.score.preload();
     this.health.preload();
     this.ammo.preload();
+    this.saboteur.preload();
   }
 
   create() {
@@ -82,13 +85,17 @@ export default class GameScene extends Phaser.Scene {
     this.score.create();
     this.health.create();
     this.ammo.create();
+    this.saboteur.create();
 
     for (let i = 0; i < 8; i++) {
       let x = 200 + (i * 330);
       this.trainCars.addTrainCar(x, i);
     }
 
+    this.physics.add.collider(this.saboteur.getBody(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.collider(this.player.getBody(), this.trainCars.getPlatformsStaticGroup());
+
+    this.physics.add.collider(this.saboteur.getBody(), this.crates.getCratesStaticGroup());
     this.physics.add.collider(this.player.getBody(), this.crates.getCratesStaticGroup());
 
     this.cameras.main.startFollow(this.player.getBody(), true, 0.05, 0.05);
@@ -104,5 +111,6 @@ export default class GameScene extends Phaser.Scene {
     this.health.update();
     this.ammo.update();
     this.wheels.update();
+    this.saboteur.update();
   }
 }
