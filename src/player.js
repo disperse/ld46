@@ -11,12 +11,13 @@ export default class Player {
   }
 
   die () {
-    // TODO: death animation
     this.alive = false;
+    this.player.anims.play('death', true);
   }
 
   preload () {
-    this.game.load.spritesheet('player', 'assets/player_144x17_v2.png', { frameWidth: 16, frameHeight: 17 });
+    this.game.load.spritesheet('player', '../assets/player_144x17_v2.png', { frameWidth: 16, frameHeight: 17 });
+    this.game.load.spritesheet('death', '../assets/death_animation.png', { frameWidth: 16, frameHeight: 17 });
   }
 
   create () {
@@ -45,6 +46,13 @@ export default class Player {
       frames: this.game.anims.generateFrameNumbers('player', { start: 5, end: 8 }),
       frameRate: 10,
       repeat: -1
+    });
+
+    this.game.anims.create({
+      key: 'death',
+      frames: this.game.anims.generateFrameNumbers('death', { start: 0, end: 29 }),
+      frameRate: 10,
+      repeat: 0
     });
   }
 

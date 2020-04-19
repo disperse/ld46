@@ -15,12 +15,10 @@ export default class Health {
   }
 
   update () {
-    /*
-    if (this.updateCount % 60 === 0 && this.health > 0) {
+    if (this.updateCount % 20 === 0 && this.health > 0) {
       this.health -= 0.5;
       this.updateHealth();
     }
-    */
     this.updateCount++;
   }
 

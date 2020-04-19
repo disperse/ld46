@@ -33,24 +33,27 @@ export default class GameScene extends Phaser.Scene {
 
   gameOver() {
     this.player.die();
-    this.cameras.main.setRenderToTexture(this.greyscalePipeline);
-    let gameOverText = this.add.text(200, 40, "Game Over", {
-      font: '24px courier',
-      fill: '#000000',
-      align: 'center'
-    });
-    gameOverText.setOrigin(0.5);
-    gameOverText.setDepth(7);
-    gameOverText.setScrollFactor(0);
 
-    let gameOverText2 = this.add.text(200, 100, "Your final score was: " + this.score.getScoreText(), {
-      font: '18px courier',
-      fill: '#000000',
-      align: 'center'
-    });
-    gameOverText2.setOrigin(0.5);
-    gameOverText2.setDepth(7);
-    gameOverText2.setScrollFactor(0);
+    setTimeout(() => {
+      this.cameras.main.setRenderToTexture(this.greyscalePipeline);
+      let gameOverText = this.add.text(200, 40, "Game Over", {
+        font: '24px courier',
+        fill: '#000000',
+        align: 'center'
+      });
+      gameOverText.setOrigin(0.5);
+      gameOverText.setDepth(7);
+      gameOverText.setScrollFactor(0);
+
+      let gameOverText2 = this.add.text(200, 100, "Your final score was: " + this.score.getScoreText(), {
+        font: '18px courier',
+        fill: '#000000',
+        align: 'center'
+      });
+      gameOverText2.setOrigin(0.5);
+      gameOverText2.setDepth(7);
+      gameOverText2.setScrollFactor(0);
+    }, 1500);
   }
 
   preload() {
