@@ -1,5 +1,5 @@
 const style = {
-  font: '11px Courier',
+  font: '11px courier',
   fill: '#40674a',
   align: 'right'
 }
@@ -8,7 +8,7 @@ export default class Score {
 
   constructor (game) {
     this.game = game;
-    this.score = 10000;
+    this.score = 0;
   }
 
   preload () {
@@ -24,7 +24,6 @@ export default class Score {
   }
 
   update () {
-    this.addScore(50);
   }
 
   addScore(s) {

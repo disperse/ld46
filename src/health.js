@@ -11,14 +11,12 @@ export default class Health {
   }
 
   create () {
+    this.updateHealth();
   }
 
   update () {
-    if (this.updateCount % 60 === 0) {
+    if (this.updateCount % 60 === 0 && this.health > 0) {
       this.health -= 0.5;
-      if (this.health < 0.5) {
-        this.health = 6.0;
-      }
       this.updateHealth();
     }
     this.updateCount++;
@@ -43,10 +41,18 @@ export default class Health {
       heart.setScrollFactor(0);
       this.healthSprites.push(heart);
     }
+    if (this.health === 0) {
+      this.game.gameOver();
+    }
   }
 
   addHealth(h) {
     this.health += h;
+    this.updateHealth();
+  }
+
+  setHealth(h) {
+    this.health = h;
     this.updateHealth();
   }
 }

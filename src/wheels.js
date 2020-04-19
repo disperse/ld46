@@ -18,8 +18,8 @@ export default class Wheels {
       wheel.setAngle(this.updateCount % 360);
       if (this.updateCount % 20 === 0) {
         wheel.y = wheel.originalY;
-        if (Math.random() < 0.2) {
-          wheel.y += (Math.random() * 4) - 2;
+        if (Math.random() < 0.1) {
+          wheel.y += (Math.random() < 0.5) ? 1 : -1;
         }
       }
     }

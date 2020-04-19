@@ -1,9 +1,18 @@
+import Phaser from 'phaser';
+
 const speed = 100;
 const jumpHeight = 150;
 
 export default class Player {
-  constructor (game) {
+  constructor (game, health) {
     this.game = game;
+    this.health = health;
+    this.alive = true;
+  }
+
+  die () {
+    // TODO: death animation
+    this.alive = false;
   }
 
   preload () {
@@ -41,6 +50,8 @@ export default class Player {
   }
 
   update () {
+    if (! this.alive) return;
+
     if (this.cursors.left.isDown) {
       this.player.setVelocityX(-speed);
       this.player.anims.play('left', true);
@@ -55,6 +66,12 @@ export default class Player {
 
     if (this.cursors.up.isDown && this.player.body.touching.down) {
       this.player.setVelocityY(-jumpHeight);
+    }
+
+    if (! Phaser.Geom.Rectangle.Overlaps(this.game.physics.world.bounds, this.player.getBounds())) {
+      // Player has fallen off the train
+      this.health.setHealth(0);
+      this.game.gameOver();
     }
   }
 

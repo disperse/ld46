@@ -11,9 +11,11 @@ export default class Ammo {
   }
 
   create () {
+    this.updateAmmo();
   }
 
   update () {
+    /*
     if (this.updateCount % 60 === 0) {
       this.ammo -= 1;
       if (this.ammo < 0) {
@@ -21,6 +23,7 @@ export default class Ammo {
       }
       this.updateAmmo();
     }
+    */
     this.updateCount++;
   }
 

@@ -9,37 +9,37 @@ const layouts = [
     name: 'cargo-car-two',
     sprite: 'cargo_car',
     spriteIndex: '1',
-    crates: [ [], [], [], [1], [1,1], [1], [], [], [1], [1,1], [1], [], [] ]
+    crates: [ [], [], [], [1], [1,1], [1,1,1], [1,1], [1], [], [], [], [], [] ]
   },
   {
     name: 'cargo-car-three',
     sprite: 'cargo_car',
     spriteIndex: '2',
-    crates: [ [], [], [], [1], [1,1], [1], [], [], [1], [1,1], [1], [], [] ]
+    crates: [ [], [], [1], [], [], [], [1], [], [], [], [1], [], [] ]
   },
   {
     name: 'cargo-car-four',
     sprite: 'cargo_car',
     spriteIndex: '3',
-    crates: [ [], [], [], [1], [1,1], [1], [], [], [1], [1,1], [1], [], [] ]
+    crates: [ [1], [1,1], [1,1,1], [1,1,1], [1,1,1,1], [1,1,1,1], [1,1,1,1], [1,1,1], [1,1,1], [1,1], [1], [], [] ]
   },
   {
     name: 'cargo-car-five',
     sprite: 'cargo_car',
     spriteIndex: '4',
-    crates: [ [], [], [], [1], [1,1], [1], [], [], [1], [1,1], [1], [], [] ]
+    crates: [ [], [1], [1,1], [1,1], [1,1], [1], [], [1], [1,1], [1,1], [1], [], [] ]
   },
   {
     name: 'cargo-car-six',
     sprite: 'cargo_car',
     spriteIndex: '5',
-    crates: [ [], [], [], [1], [1,1], [1], [], [], [1], [1,1], [1], [], [] ]
+    crates: [ [1], [], [1], [], [1], [], [1], [], [1], [1], [1], [1], [] ]
   },
   {
     name: 'cargo-car-seven',
     sprite: 'cargo_car',
     spriteIndex: '6',
-    crates: [ [], [], [], [1], [1,1], [1], [], [], [1], [1,1], [1], [], [] ]
+    crates: [ [1], [1,1], [1], [], [1], [1,1], [1], [], [1], [1,1], [1], [1,1], [1] ]
   },
   {
     name: 'passenger-car-one',

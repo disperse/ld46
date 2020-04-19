@@ -10,6 +10,7 @@ import Foreground from './foreground.js';
 import Score from './score.js';
 import Health from './health.js';
 import Ammo from './ammo.js';
+import GreyscalePipeline from './greyscale_pipeline';
 
 export default class GameScene extends Phaser.Scene {
   constructor (config) {
@@ -17,17 +18,41 @@ export default class GameScene extends Phaser.Scene {
     this.background = new Background(this);
     this.birdie = new Birdie(this);
     this.plateau = new Plateau(this);
-    this.player = new Player(this);
+    this.health = new Health(this);
+    this.player = new Player(this, this.health);
     this.crates = new Crates(this, this.player);
     this.wheels = new Wheels(this);
     this.trainCars = new TrainCars(this, this.player, this.crates, this.wheels);
     this.foreground = new Foreground(this);
     this.score = new Score(this);
-    this.health = new Health(this);
     this.ammo = new Ammo(this);
+
+  }
+
+  gameOver() {
+    this.player.die();
+    this.cameras.main.setRenderToTexture(this.greyscalePipeline);
+    let gameOverText = this.add.text(200, 40, "Game Over", {
+      font: '24px courier',
+      fill: '#000000',
+      align: 'center'
+    });
+    gameOverText.setOrigin(0.5);
+    gameOverText.setDepth(7);
+    gameOverText.setScrollFactor(0);
+
+    let gameOverText2 = this.add.text(200, 100, "Your final score was: " + this.score.getScoreText(), {
+      font: '18px courier',
+      fill: '#000000',
+      align: 'center'
+    });
+    gameOverText2.setOrigin(0.5);
+    gameOverText2.setDepth(7);
+    gameOverText2.setScrollFactor(0);
   }
 
   preload() {
+    this.greyscalePipeline = this.game.renderer.addPipeline('Greyscale', new GreyscalePipeline(this.game));
     this.icons = this.load.spritesheet('icons', 'assets/icons_128x48.png', { frameWidth: 16, frameHeight: 16 });
 
     this.background.preload();
@@ -59,7 +84,7 @@ export default class GameScene extends Phaser.Scene {
     this.ammo.create();
 
     for (let i = 0; i < 8; i++) {
-      let x = 200 + (i * 320);
+      let x = 200 + (i * 330);
       this.trainCars.addTrainCar(x, i);
     }
 
