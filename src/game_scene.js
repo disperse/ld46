@@ -60,7 +60,7 @@ export default class GameScene extends Phaser.Scene {
 
     for (let i = 0; i < 8; i++) {
       let x = 200 + (i * 320);
-      this.trainCars.addTrainCar(x);
+      this.trainCars.addTrainCar(x, i);
     }
 
     this.physics.add.collider(this.player.getBody(), this.trainCars.getPlatformsStaticGroup());
