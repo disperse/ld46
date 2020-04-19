@@ -5,7 +5,8 @@ export default class Crates {
   }
 
   preload () {
-    this.game.load.image('crate', '../assets/crate_24x24.png');
+    this.game.load.image('crate', '../assets/crate_20x20.png');
+    this.game.load.image('crate2', '../assets/crate_40x20.png');
   }
 
   create () {
@@ -16,8 +17,8 @@ export default class Crates {
     return this.crates;
   }
 
-  addCrate (x, y) {
-    let crate = this.crates.create(x, y, 'crate');
+  addCrate (x, y, type) {
+    let crate = this.crates.create(x, y, (type === 'long') ? 'crate2' : 'crate');
     crate.setDepth(5);
   }
 }

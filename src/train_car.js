@@ -6,7 +6,7 @@ export default class TrainCars {
   }
 
   preload () {
-    this.game.load.image('train_car', 'assets/train-car_300x150.png');
+    this.game.load.image('train_car', 'assets/passenger-car_300x125.png');
     this.game.load.image('ground', 'assets/platform_200x2.png');
   }
 
@@ -18,13 +18,7 @@ export default class TrainCars {
     let trainCar = this.game.add.sprite(x, 135, 'train_car')
     this.platforms.create(x, 187, 'ground').setScale(1.5).refreshBody();
     trainCar.setDepth(4);
-    this.crates.addCrate((x - 24), 151);
-    this.crates.addCrate((x - 24), 175);
-    this.crates.addCrate(x, 151);
-    this.crates.addCrate(x, 175);
-    this.crates.addCrate((x + 24) , 175);
-    this.crates.addCrate((x + 24) , 151);
-    this.crates.addCrate((x + 48) , 175);
+    this.crates.addCrate(x, 176, 'long');
   }
 
   getPlatformsStaticGroup () {

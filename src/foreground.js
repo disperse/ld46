@@ -7,24 +7,32 @@ export default class Foreground {
 
   preload () {
     this.game.load.image('bush', '../assets/bush_64x64.png');
+    this.game.load.image('foreground', '../assets/foreground_640x64.png');
   }
 
   create () {
+    this.foreground = this.game.add.tileSprite(200, 203, 640, 64, 'foreground');
+    this.foreground.setDepth(6);
+    this.foreground.setScrollFactor(0);
   }
 
   update () {
     if (this.updateCount % 30 === 0) {
-      if (Math.random() < 0.2) {
-        let bush = this.game.add.sprite(450, 203, 'bush');
-        bush.setDepth(6);
+      if (Math.random() < 0.5) {
+        let bush = this.game.add.sprite(450, 180 + (Math.random() * 40), 'bush');
+        bush.setDepth(7);
         bush.setScrollFactor(0);
         if (Math.random() < 0.5) bush.flipX = true;
         this.bushes.push(bush);
       }
     }
+    this.foreground.tilePositionX+=5;
     for (let i = 0; i < this.bushes.length; i++) {
       let bush = this.bushes[i];
-      this.bushes[i].x -= 5;
+      bush.x -= 5;
+    }
+    for (let i = 0; i < this.bushes.length; i++) {
+      let bush = this.bushes[i];
       if (bush.x < -64) {
         bush.destroy();
         this.bushes.splice(i, 1);
