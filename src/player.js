@@ -125,11 +125,11 @@ export default class Player {
   }
 
   goingRight () {
-    return (this.cursors.right.isDown | (this.gamepad && this.gamepad.leftStick.x > 0.5) || (this.gamepad && this.gamepad.buttons[15].value === 1));
+    return (this.cursors.right.isDown || (this.gamepad && this.gamepad.right) || (this.gamepad && this.gamepad.leftStick.x > 0.5) || (this.gamepad && this.gamepad.buttons[15].value === 1));
   }
 
   goingLeft () {
-    return (this.cursors.left.isDown | (this.gamepad && this.gamepad.leftStick.x < -0.5) || (this.gamepad && this.gamepad.buttons[14].value === 1));
+    return (this.cursors.left.isDown || (this.gamepad && this.gamepad.left) || (this.gamepad && this.gamepad.leftStick.x < -0.5) || (this.gamepad && this.gamepad.buttons[14].value === 1));
   }
 
   getBody() {

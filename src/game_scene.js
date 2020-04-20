@@ -104,11 +104,13 @@ export default class GameScene extends Phaser.Scene {
 
     this.engine.addEngine(x + 363);
     // add player x - 109
-    this.player.create(x + 254);
+    //this.player.create(x + 254);
+    this.player.create(200);
 
     this.physics.add.collider(this.saboteur.getBody(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.collider(this.player.getBody(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.collider(this.player.getBody(), this.engine.getPlatformsStaticGroup());
+    this.physics.add.collider(this.bandit.getBody(), this.trainCars.getPlatformsStaticGroup());
 
     this.physics.add.collider(this.saboteur.getBody(), this.crates.getCratesStaticGroup());
     this.physics.add.collider(this.player.getBody(), this.crates.getCratesStaticGroup());

@@ -3,8 +3,8 @@ const speed = 50;
 export default class Bandit {
   constructor (game) {
     this.game = game;
-    this.alive, this.movingFrom, this.movingTo, this.movingLeft, this.movingRight = false;
     this.updateCount = 0;
+    this.bandits = [];
   }
 
   die () {
@@ -17,7 +17,7 @@ export default class Bandit {
   }
 
   create () {
-    this.bandits = this.game.physics.add.group();
+    this.physicsGroup = this.game.physics.add.group();
 
     this.game.anims.create({
       key: 'bandit-left',
@@ -41,14 +41,14 @@ export default class Bandit {
   }
 
   spawn (from, to) {
-    this.alive = true;
-    this.movingFrom = from;
-    this.movingTo = to;
-    let bandit = this.game.physics.add.sprite(from, 0, 'saboteur');
+    let bandit = this.physicsGroup.create(from, 164, 'bandit');
     bandit.setDepth(5);
     bandit.setBounce(0.1);
     bandit.setSize(10, 16);
     bandit.setCollideWorldBounds(false);
+    bandit.movingFrom = from;
+    bandit.movingTo = to;
+    this.bandits.push(bandit);
   }
 
   update () {
@@ -58,31 +58,34 @@ export default class Bandit {
       return;
     }
 
-    if (!this.alive || !this.movingTo) return;
-
-    if (Math.abs(this.bandit.x - this.movingTo) < 2) {
-      this.bandit.anims.play('bandit', true);
-      this.bandit.setVelocityX(0);
-      this.movingLeft = !this.movingLeft;
-      this.movingRight = !this.movingRight;
-      let tempMovingTo = this.movingTo;
-      this.movingTo = this.movingFrom;
-      this.movingFrom = tempMovingTo;
-    } else {
-      if (this.bandit.x > this.movingTo) {
-        this.movingLeft = true;
-        this.bandit.setVelocityX(-speed);
-        this.bandit.anims.play('bandit-left', true);
-      }
-      else if (this.bandit.x < this.movingTo) {
-        this.movingRight = true;
-        this.bandit.setVelocityX(speed);
-        this.bandit.anims.play('bandit-right', true);
+    for (let i = 0; i < this.bandits.length; i++) {
+      let bandit = this.bandits[i];
+      console.log('bandit', bandit);
+      if (Math.abs(bandit.x - bandit.movingTo) < 2) {
+        bandit.anims.play('bandit-turn', true);
+        // TODO: shoot here
+        bandit.setVelocityX(0);
+        bandit.movingLeft = !bandit.movingLeft;
+        bandit.movingRight = !bandit.movingRight;
+        let tempMovingTo = bandit.movingTo;
+        bandit.movingTo = bandit.movingFrom;
+        bandit.movingFrom = tempMovingTo;
+      } else {
+        if (bandit.x > bandit.movingTo) {
+          bandit.movingLeft = true;
+          bandit.setVelocityX(-speed);
+          bandit.anims.play('bandit-left', true);
+        }
+        else if (bandit.x < bandit.movingTo) {
+          bandit.movingRight = true;
+          bandit.setVelocityX(speed);
+          bandit.anims.play('bandit-right', true);
+        }
       }
     }
   }
 
   getBody () {
-    return this.bandits;
+    return this.physicsGroup;
   }
 }
