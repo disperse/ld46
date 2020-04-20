@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-const speed = 100;
+const speed = 120;
 const jumpHeight = 150;
 
 export default class Player {
@@ -32,6 +32,9 @@ export default class Player {
     this.jumpSound = this.game.sound.add('jump');
     this.shovelSound = this.game.sound.add('shovel');
     this.cursors = this.game.input.keyboard.createCursorKeys();
+    this.game.input.gamepad.once('down', (pad, button, index) => {
+      this.gamepad = pad;
+    }, this.game);
     this.player = this.game.physics.add.sprite(x, 164, 'player');
     this.player.setDepth(6);
     this.player.setBounce(0.1);
@@ -79,16 +82,22 @@ export default class Player {
 
     this.updateCount++;
 
-    if (this.cursors.left.isDown) {
+    if (this.cursors.left.isDown ||
+      (this.gamepad && this.gamepad.leftStick.x < -0.5) ||
+      (this.gamepad && this.gamepad.buttons[14].value === 1)) {
+      console.log('left');
       this.player.setVelocityX(-speed);
       this.player.anims.play('left', true);
     }
-    else if (this.cursors.right.isDown) {
+    else if (this.cursors.right.isDown ||
+      (this.gamepad && this.gamepad.leftStick.x > 0.5) ||
+      (this.gamepad && this.gamepad.buttons[15].value === 1)) {
+      console.log('right');
       this.player.setVelocityX(speed);
       this.player.anims.play('right', true);
     }
 
-    if (this.cursors.up.isDown && this.player.body.touching.down) {
+    if (this.player.body.touching.down && (this.cursors.up.isDown || this.gamepad && this.gamepad.A)) {
       this.jumpSound.play();
       this.player.setVelocityY(-jumpHeight);
     }
