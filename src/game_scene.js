@@ -16,6 +16,7 @@ import Tnt from './tnt.js';
 import Saboteur from './saboteur.js';
 import Gold from './gold.js';
 import Steam from './steam.js';
+import Bullets from './bullet.js';
 import GreyscalePipeline from './greyscale_pipeline';
 
 
@@ -30,11 +31,12 @@ export default class GameScene extends Phaser.Scene {
     this.score = new Score(this);
     this.engine = new Engine(this);
     this.steam = new Steam(this);
-    this.player = new Player(this, this.health, this.score, this.engine, this.steam);
+    this.bullets = new Bullets(this);
+    this.player = new Player(this, this.health, this.score, this.engine, this.steam, this.bullets);
     this.crates = new Crates(this, this.player);
     this.wheels = new Wheels(this);
     this.gold = new Gold(this);
-    this.bandit = new Bandit(this);
+    this.bandit = new Bandit(this, this.bullets);
     this.trainCars = new TrainCars(this, this.player, this.crates, this.wheels, this.gold, this.bandit);
     this.foreground = new Foreground(this);
     this.ammo = new Ammo(this);
@@ -56,6 +58,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.audio('timer-beep', ['../assets/timer-beep.ogg']);
     this.load.audio('bomb-disarm', ['../assets/bomb-disarm.ogg']);
     this.load.audio('explosion', ['../assets/explosion.ogg']);
+    this.bullets.preload();
     this.background.preload();
     this.birdie.preload();
     this.plateau.preload();
@@ -79,6 +82,7 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3600, 225);
     this.physics.world.setBounds(0, 0, 3600, 225);
 
+    this.bullets.create();
     this.background.create();
     this.birdie.create();
     this.plateau.create();
@@ -122,6 +126,8 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.tnt.getTntStaticGroup(), this.player.getBody(), this.playerDisarmBomb, null, this);
     this.physics.add.collider(this.tnt.getTntStaticGroup(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.collider(this.tnt.getTntStaticGroup(), this.crates.getCratesStaticGroup());
+    //this.physics.add.overlap(this.bullets.getBulletPhysicsGroup(), this.player.getBody(), this.playerShot, null, this);
+    //this.physics.add.overlap(this.bullets.getBulletPhysicsGroup(), this.bandit.getBody(), this.banditShot, null, this);
 
     this.cameras.main.startFollow(this.player.getBody(), true, 0.05, 0.05);
     this.deathMusic = this.sound.add('death-music');
@@ -144,6 +150,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
+    this.bullets.update();
     this.background.update();
     this.birdie.update();
     this.plateau.update();
@@ -167,6 +174,16 @@ export default class GameScene extends Phaser.Scene {
     this.bombDisarmSound.play();
     this.disarmedTnt = this.disarmedBomb.create(player.x, player.y + 10, 'tnt');
     this.disarmedTnt.setDepth(6);
+  }
+
+  playerShot(player, bullet) {
+    bullet.destroy();
+    this.health.addHealth(-1);
+  }
+
+  banditShot(bandit, bullet) {
+    bullet.destroy();
+    bandit.destroy();
   }
 
   playerPickupGold(player, gold) {

@@ -1,10 +1,11 @@
 const speed = 50;
 
 export default class Bandit {
-  constructor (game) {
+  constructor (game, bullets) {
     this.game = game;
     this.updateCount = 0;
     this.bandits = [];
+    this.bullets = bullets;
   }
 
   die () {
@@ -51,6 +52,10 @@ export default class Bandit {
     this.bandits.push(bandit);
   }
 
+  shoot (x, movingLeft) {
+    this.bullets.addBullet(x, (movingLeft) ? -100 : 100);
+  }
+
   update () {
     this.updateCount++;
 
@@ -60,16 +65,16 @@ export default class Bandit {
 
     for (let i = 0; i < this.bandits.length; i++) {
       let bandit = this.bandits[i];
-      console.log('bandit', bandit);
       if (Math.abs(bandit.x - bandit.movingTo) < 2) {
         bandit.anims.play('bandit-turn', true);
-        // TODO: shoot here
+
         bandit.setVelocityX(0);
         bandit.movingLeft = !bandit.movingLeft;
         bandit.movingRight = !bandit.movingRight;
         let tempMovingTo = bandit.movingTo;
         bandit.movingTo = bandit.movingFrom;
         bandit.movingFrom = tempMovingTo;
+        this.shoot(bandit.x, bandit.movingLeft);
       } else {
         if (bandit.x > bandit.movingTo) {
           bandit.movingLeft = true;
