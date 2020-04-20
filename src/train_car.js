@@ -9,7 +9,7 @@ const layouts = [
     sprite: 'passenger_car',
     spriteIndex: '0',
     chandeliers: [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    tables: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    tables: [0, 1, 0, 2, 0, 1, 0, 4, 0, 1, 0, 3, 0]
   },
   {
     name: 'cargo-car-one',
@@ -68,10 +68,12 @@ export default class TrainCars {
     this.game.load.image('caboose', '../assets/caboose-2.png');
     this.game.load.image('passenger_car', '../assets/passenger-car-2_300x125.png');
     this.game.load.spritesheet('cargo_car', '../assets/cargo-car_2400x250.png', { frameWidth: 300, frameHeight: 125 });
+    this.game.load.spritesheet('tables', '../assets/tables_160x40.png', { frameWidth: 40, frameHeight: 40 });
     this.game.load.image('ground', '../assets/platform_200x2.png');
     this.game.load.image('hitch', '../assets/hitch-2.png');
     this.game.load.image('hydraulics', '../assets/hydraulics_100x33.png');
     this.game.load.image('chandelier', '../assets/chandelier-40x40.png');
+    this.game.load.image('lamp', '../assets/lamp2.png');
   }
 
   create () {
@@ -104,14 +106,20 @@ export default class TrainCars {
 
     if (layout.chandeliers) {
       for (let i = 0; i < layout.chandeliers.length; i++) {
-        if (layout.chandeliers[i] === 1) {
-          let chandelier = this.game.add.sprite(startX + (i * 20), 89, 'chandelier');
-          chandelier.setDepth(6);
+        if (layout.chandeliers[i] > 0) {
+          let chandelier = this.game.add.sprite(startX + (i * 20), 89, (layout.chandeliers[i] === 1) ? 'chandelier' : 'lamp');
+          chandelier.setDepth(5);
         }
       }
     }
 
     if (layout.tables) {
+      for (let i = 0; i < layout.tables.length; i++) {
+        if (layout.tables[i] > 0) {
+          let table = this.game.add.sprite(startX + (i * 20), 156, 'tables', (layout.tables[i] - 1));
+          table.setDepth(5);
+        }
+      }
 
     }
     this.wheels.addWheel(x-98, 197);

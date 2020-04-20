@@ -21,6 +21,7 @@ export default class Score {
     this.scoreText = this.game.add.text(398, 2, this.getScoreText(), style);
     this.scoreText.setOrigin(1.0, 0.0);
     this.scoreText.setScrollFactor(0);
+    this.scoreText.setDepth(2);
     this.updateScore();
   }
 

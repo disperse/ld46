@@ -129,25 +129,24 @@ export default class GameScene extends Phaser.Scene {
           gold.destroy();
         }
         break;
-      case 21: // gold bar
+      case 21: // gold coin
         this.pickupGoldSound.play();
-        this.score.addScore(500);
+        this.score.addScore(50);
         gold.destroy();
         break;
       case 22: // gold bars
         this.pickupGoldBarsSound.play();
-        this.score.addScore(1500);
+        this.score.addScore(500);
         gold.destroy();
         break;
       case 23: // money bag
         this.pickupBulletsSound.play();
-        this.score.addScore(250);
+        this.score.addScore(150);
         gold.destroy();
         break;
       case 24: // turkey leg
         if (this.health.heal()) {
           this.pickupFoodSound.play();
-          this.score.addScore(250);
           gold.destroy();
         }
         break;
