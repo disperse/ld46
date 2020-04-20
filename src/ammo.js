@@ -33,7 +33,7 @@ export default class Ammo {
     }
     this.ammoSprites = [];
     for (let i = 0; i < 6; i++) {
-      let ammo = this.game.add.sprite(95 + (14 * i), 6, 'icons', ((i <= this.ammo) ? 2 : 3));
+      let ammo = this.game.add.sprite(95 + (14 * i), 6, 'icons', ((i < this.ammo) ? 3 : 4));
       ammo.setDepth(6);
       ammo.setScrollFactor(0);
       this.ammoSprites.push(ammo);

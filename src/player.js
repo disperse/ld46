@@ -25,8 +25,8 @@ export default class Player {
   create () {
     this.jumpSound = this.game.sound.add('jump');
     this.cursors = this.game.input.keyboard.createCursorKeys();
-    this.player = this.game.physics.add.sprite(2410, 100, 'player');
-    this.player.setDepth(5);
+    this.player = this.game.physics.add.sprite(100, 100, 'player');
+    this.player.setDepth(6);
     this.player.setBounce(0.1);
     this.player.setSize(10, 15);
     this.player.setCollideWorldBounds(false);

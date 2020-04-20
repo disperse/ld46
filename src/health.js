@@ -31,20 +31,20 @@ export default class Health {
       this.healthSprites[i].destroy();
     }
     this.healthSprites = [];
-    for (let i = 0; i < Math.floor(this.health); i++) {
-      if (this.healthSprites.length <= i) {
-        let heart = this.game.add.sprite(8 + (14 * i), 8, 'icons', 0);
-        heart.setDepth(6);
-        heart.setScrollFactor(0);
-        this.healthSprites.push(heart);
-      }
+    for (let i = 0; i < 6; i++) {
+      let heart = this.game.add.sprite(8 + (14 * i), 8, 'icons', ((i < this.health) ? 0 : 2));
+      heart.setDepth(6);
+      heart.setScrollFactor(0);
+      this.healthSprites.push(heart);
     }
+    /*
     if (Math.ceil(this.health) > this.healthSprites.length) {
       let heart = this.game.add.sprite(8 + (14 * this.healthSprites.length), 8, 'icons', 1);
       heart.setDepth(6);
       heart.setScrollFactor(0);
       this.healthSprites.push(heart);
     }
+    */
     if (this.health === 0) {
       this.game.gameOver();
     }

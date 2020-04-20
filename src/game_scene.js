@@ -34,7 +34,7 @@ export default class GameScene extends Phaser.Scene {
 
   preload() {
     this.greyscalePipeline = this.game.renderer.addPipeline('Greyscale', new GreyscalePipeline(this.game));
-    this.icons = this.load.spritesheet('icons', 'assets/icons_128x48.png', { frameWidth: 16, frameHeight: 16 });
+    this.icons = this.load.spritesheet('icons', 'assets/icons-2_128x64.png', { frameWidth: 16, frameHeight: 16 });
     this.load.audio('music', ['../assets/scott-joplin-ragtime-dance.mp3']);
     this.load.audio('death-music', ['../assets/bessie-smith-my-sweetie-went-away.mp3']);
     this.load.audio('train', ['../assets/steam-train.ogg']);
@@ -75,7 +75,8 @@ export default class GameScene extends Phaser.Scene {
     this.ammo.create();
     this.saboteur.create();
 
-    for (let i = 0; i < 8; i++) {
+
+    for (let i = 0; i < 9; i++) {
       let x = 200 + (i * 330);
       this.trainCars.addTrainCar(x, i);
     }
@@ -101,10 +102,10 @@ export default class GameScene extends Phaser.Scene {
     this.pickupMoneyBagSound = this.sound.add('pickup-money-bag');
     this.pickupBulletsSound = this.sound.add('pickup-bullets');
     this.pickupFoodSound = this.sound.add('pickup-food');
-    let train = this.sound.add('train');
-    train.setVolume(0.8);
-    train.setLoop(true);
-    train.play();
+    this.trainSound = this.sound.add('train');
+    this.trainSound.setVolume(0.8);
+    this.trainSound.setLoop(true);
+    this.trainSound.play();
   }
 
   update() {
@@ -122,28 +123,28 @@ export default class GameScene extends Phaser.Scene {
 
   playerPickupGold(player, gold) {
     switch (gold.frame.name) {
-      case 19: // bullets
+      case 20: // bullets
         if (this.ammo.reload()) {
-          this.pickupBulletsSound.play();
+          this.pickupMoneyBagSound.play();
           gold.destroy();
         }
         break;
-      case 20: // gold bar
+      case 21: // gold bar
         this.pickupGoldSound.play();
         this.score.addScore(500);
         gold.destroy();
         break;
-      case 21: // gold bars
+      case 22: // gold bars
         this.pickupGoldBarsSound.play();
         this.score.addScore(1500);
         gold.destroy();
         break;
-      case 22: // money bag
-        this.pickupMoneyBagSound.play();
+      case 23: // money bag
+        this.pickupBulletsSound.play();
         this.score.addScore(250);
         gold.destroy();
         break;
-      case 23: // turkey leg
+      case 24: // turkey leg
         if (this.health.heal()) {
           this.pickupFoodSound.play();
           this.score.addScore(250);
@@ -167,7 +168,13 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.removeBounds();
     this.cameras.main.pan(-1000, 112, 1500);
 
+    this.tweens.add({
+      targets: this.trainSound,
+      volume: 0,
+      duration: 1500
+    });
     setTimeout(() => {
+      this.trainSound.stop();
       this.cameras.main.setRenderToTexture(this.greyscalePipeline);
       let gameOverText = this.add.text(200, 40, "Game Over", {
         font: '24px courier',

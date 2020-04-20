@@ -19,6 +19,6 @@ export default class Crates {
 
   addCrate (x, y, type) {
     let crate = this.crates.create(x, y, (type === 'long') ? 'crate2' : 'crate');
-    crate.setDepth(5);
+    crate.setDepth(6);
   }
 }

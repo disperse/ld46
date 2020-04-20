@@ -11,7 +11,7 @@ export default class Background {
 
   create () {
     this.tileSprite = this.game.add.tileSprite(200, 112, 400, 225, 'background');
-    this.tileSprite.setDepth(0);
+    this.tileSprite.setDepth(1);
     this.tileSprite.setScrollFactor(0);
   }
 
