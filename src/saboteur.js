@@ -1,10 +1,19 @@
 const speed = 100;
-const jumpHeight = 150;
+const jumpHeight = 200;
+const minMovingFrom = 200;
+const maxMovingTo = 2510;
+const defaultBombTimer = 1800;
 
 export default class Saboteur {
-  constructor (game) {
+  constructor (game, tnt) {
     this.game = game;
+    this.tnt = tnt;
     this.alive, this.movingTo, this.movingLeft, this.movingRight = false;
+    this.bombTimer = 0;
+    this.bombSet = false;
+    this.settingBomb = false;
+    this.updateCount = 0;
+    this.tempTnt;
   }
 
   die () {
@@ -38,7 +47,7 @@ export default class Saboteur {
     });
 
     // 330 * dest car
-    this.spawn(200, 2510);
+    this.spawn(minMovingFrom, maxMovingTo);
   }
 
   spawn (from, to) {
@@ -53,13 +62,43 @@ export default class Saboteur {
   }
 
   update () {
-    if (!this.alive || !this.movingTo) return;
+    this.updateCount++;
+
+    if (this.bombSet) {
+      this.bombTimer --;
+      if (this.bombTimer === 0) {
+        // Bomb goes off
+        // TODO: handle explosion
+        this.game.gameOver();
+      }
+    }
+
+    if (this.updateCount % 50 === 0) {
+      if (this.settingBomb) {
+        this.settingBomb = false;
+        this.tempTnt.destroy();
+        this.tnt.addTnt(this.saboteur.x, 70, this.bombTimer);
+        this.bombSet = true;
+        this.bombTimer = defaultBombTimer;
+        this.movingTo = (Math.random() < 0.5) ? minMovingFrom : maxMovingTo;
+        return;
+      }
+
+      if (!this.bombSet && this.saboteur.body.touching.down) {
+        this.settingBomb = true;
+        this.tempTnt = this.tnt.addTnt(this.saboteur.x, this.saboteur.y);
+        this.saboteur.anims.play('saboteur-turn', true);
+        this.saboteur.setVelocityX(0);
+      }
+    }
+
+    if (!this.alive || !this.movingTo || this.settingBomb) return;
     if (Math.abs(this.saboteur.x - this.movingTo) < 2) {
       this.saboteur.anims.play('saboteur-turn', true);
       this.saboteur.setVelocityX(0);
       this.movingLeft = !this.movingLeft;
       this.movingRight = !this.movingRight;
-      this.movingTo = (this.movingLeft) ? 2620 : 90;
+      this.movingTo = (this.movingLeft) ? maxMovingTo : minMovingFrom;
     } else {
       if (this.saboteur.x > this.movingTo) {
         this.movingLeft = true;
@@ -81,6 +120,11 @@ export default class Saboteur {
         this.saboteur.setVelocityY(-jumpHeight);
       }
     }
+  }
+
+  disarmBomb () {
+    this.bombSet = false;
+    this.bombTimer = 0;
   }
 
   getBody () {

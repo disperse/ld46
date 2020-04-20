@@ -19,7 +19,7 @@ export default class Birdie {
   }
 
   update () {
-    if (this.updateCount % 100 === 0) {
+    if (this.updateCount % 200 === 0) {
       if (Math.random() < 0.05) {
         let birdie = this.game.add.sprite(450, 10 + (50 * Math.random()), 'birdie');
         birdie.setDepth((Math.random() < 0.5) ? 2 : 4);

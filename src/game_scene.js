@@ -10,6 +10,7 @@ import Foreground from './foreground.js';
 import Score from './score.js';
 import Health from './health.js';
 import Ammo from './ammo.js';
+import Tnt from './tnt.js';
 import Saboteur from './saboteur.js';
 import Gold from './gold.js';
 import GreyscalePipeline from './greyscale_pipeline';
@@ -29,7 +30,8 @@ export default class GameScene extends Phaser.Scene {
     this.trainCars = new TrainCars(this, this.player, this.crates, this.wheels, this.gold);
     this.foreground = new Foreground(this);
     this.ammo = new Ammo(this);
-    this.saboteur = new Saboteur(this)
+    this.tnt = new Tnt(this)
+    this.saboteur = new Saboteur(this, this.tnt)
   }
 
   preload() {
@@ -55,6 +57,7 @@ export default class GameScene extends Phaser.Scene {
     this.foreground.preload();
     this.health.preload();
     this.ammo.preload();
+    this.tnt.preload();
     this.saboteur.preload();
   }
 
@@ -73,6 +76,7 @@ export default class GameScene extends Phaser.Scene {
     this.foreground.create();
     this.health.create();
     this.ammo.create();
+    this.tnt.create();
     this.saboteur.create();
 
 
@@ -91,7 +95,11 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.gold.getGoldStaticGroup(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.overlap(this.gold.getGoldStaticGroup(), this.player.getBody(), this.playerPickupGold, null, this);
 
-    this.cameras.main.startFollow(this.player.getBody(), true, 0.05, 0.05);
+    this.physics.add.overlap(this.tnt.getTntStaticGroup(), this.player.getBody(), this.playerDisarmBomb, null, this);
+    this.physics.add.collider(this.tnt.getTntStaticGroup(), this.trainCars.getPlatformsStaticGroup());
+    this.physics.add.collider(this.tnt.getTntStaticGroup(), this.crates.getCratesStaticGroup());
+
+    this.cameras.main.startFollow(this.saboteur.getBody(), true, 0.05, 0.05);
     this.deathMusic = this.sound.add('death-music');
     this.music = this.sound.add('music');
     this.music.setVolume(0.8);
@@ -119,6 +127,11 @@ export default class GameScene extends Phaser.Scene {
     this.ammo.update();
     this.wheels.update();
     this.saboteur.update();
+  }
+
+  playerDisarmBomb(player, tnt) {
+    this.saboteur.disarmbomb();
+    tnt.destroy();
   }
 
   playerPickupGold(player, gold) {

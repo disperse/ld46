@@ -52,7 +52,12 @@ const layouts = [
     sprite: 'cargo_car',
     spriteIndex: '6',
     crates: [ [1], [1,1], [1], [], [1], [1,1], [1], [], [1], [1,1], [1], [1,1], [1] ],
-  }
+  },
+  {
+    name: 'coal-car',
+    sprite: 'coal_car',
+    spriteIndex: '0'
+  },
 ]
 
 export default class TrainCars {
@@ -67,6 +72,7 @@ export default class TrainCars {
   preload () {
     this.game.load.image('caboose', '../assets/caboose-2.png');
     this.game.load.image('passenger_car', '../assets/passenger-car-2_300x125.png');
+    this.game.load.image('coal_car', '../assets/coal-car_300x52.png');
     this.game.load.spritesheet('cargo_car', '../assets/cargo-car_2400x250.png', { frameWidth: 300, frameHeight: 125 });
     this.game.load.spritesheet('tables', '../assets/tables_160x40.png', { frameWidth: 40, frameHeight: 40 });
     this.game.load.image('ground', '../assets/platform_200x2.png');
