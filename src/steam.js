@@ -19,6 +19,12 @@ export default class Steam {
   }
 
   update () {
+    if (this.steam === 0) {
+      if (!this.game.isGameOver()) {
+        this.game.gameOver(true);
+      }
+      return
+    }
     if (this.updateCount % 120 === 0 && this.steam > 0) {
       this.steam -= 1;
       this.updateSteam();
@@ -35,7 +41,6 @@ export default class Steam {
 
   updateSteam () {
     if (this.steamGauge === undefined) return;
-    console.log('this.steamGauge', this.steamGauge);
     this.steamGauge.setFrame(19 - this.steam);
   }
 }

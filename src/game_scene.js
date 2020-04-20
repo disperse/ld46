@@ -191,7 +191,7 @@ export default class GameScene extends Phaser.Scene {
     return this.finished;
   }
 
-  gameOver() {
+  gameOver(outOfSteam) {
     this.finished = true;
     this.music.stop();
     this.deathMusic.play()
@@ -202,7 +202,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.cameras.main.stopFollow();
     this.cameras.main.removeBounds();
-    this.cameras.main.pan(-1000, 112, 1500);
+    if (outOfSteam) {
+      this.cameras.main.pan(0, 112, 1500, 'Linear');
+    } else {
+      this.cameras.main.pan(-1000, 112, 1500);
+    }
 
     this.tweens.add({
       targets: this.trainSound,
