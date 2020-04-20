@@ -13,7 +13,9 @@ import Ammo from './ammo.js';
 import Tnt from './tnt.js';
 import Saboteur from './saboteur.js';
 import Gold from './gold.js';
+import Steam from './steam.js';
 import GreyscalePipeline from './greyscale_pipeline';
+
 
 export default class GameScene extends Phaser.Scene {
   constructor (config) {
@@ -32,6 +34,7 @@ export default class GameScene extends Phaser.Scene {
     this.foreground = new Foreground(this);
     this.ammo = new Ammo(this);
     this.tnt = new Tnt(this)
+    this.steam = new Steam(this);
     this.saboteur = new Saboteur(this, this.tnt)
   }
 
@@ -62,6 +65,7 @@ export default class GameScene extends Phaser.Scene {
     this.health.preload();
     this.ammo.preload();
     this.tnt.preload();
+    this.steam.preload();
     this.saboteur.preload();
   }
 
@@ -82,6 +86,7 @@ export default class GameScene extends Phaser.Scene {
     this.ammo.create();
     this.tnt.create();
     this.saboteur.create();
+    this.steam.create();
 
 
     for (let i = 0; i < 9; i++) {
@@ -134,6 +139,7 @@ export default class GameScene extends Phaser.Scene {
     this.ammo.update();
     this.wheels.update();
     this.saboteur.update();
+    this.steam.update();
   }
 
   playerDisarmBomb(player, tnt) {

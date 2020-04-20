@@ -2,7 +2,7 @@ const speed = 100;
 const jumpHeight = 200;
 const minMovingFrom = 200;
 const maxMovingTo = 2510;
-const defaultBombTimer = 420; //1800
+const defaultBombTimer = 1800; //1800
 const style = {
   font: '13px courier',
   fill: '#F00',
@@ -97,7 +97,7 @@ export default class Saboteur {
       }
     }
 
-    if (this.updateCount % 50 === 0) {
+    if (this.updateCount % 500 === 0) {
       if (this.settingBomb) {
         this.settingBomb = false;
         this.tempTnt.destroy();
