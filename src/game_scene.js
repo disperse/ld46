@@ -205,6 +205,7 @@ export default class GameScene extends Phaser.Scene {
     });
     setTimeout(() => {
       this.trainSound.stop();
+      this.cameras.main.resetFX();
       this.cameras.main.setRenderToTexture(this.greyscalePipeline);
       let gameOverText = this.add.text(200, 40, "Game Over", {
         font: '24px courier',

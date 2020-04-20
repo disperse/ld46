@@ -90,6 +90,7 @@ export default class Saboteur {
       if (this.timeLeft === 0) {
         this.bombSet = false;
         this.explosion.play();
+        this.game.cameras.main.fade(1500, 255, 255, 255);
         // Bomb goes off
         // TODO: handle explosion
         this.game.gameOver();
