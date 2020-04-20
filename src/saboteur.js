@@ -2,18 +2,23 @@ const speed = 100;
 const jumpHeight = 200;
 const minMovingFrom = 200;
 const maxMovingTo = 2510;
-const defaultBombTimer = 1800;
+const defaultBombTimer = 420; //1800
+const style = {
+  font: '13px courier',
+  fill: '#F00',
+  align: 'center'
+};
 
 export default class Saboteur {
   constructor (game, tnt) {
     this.game = game;
     this.tnt = tnt;
     this.alive, this.movingTo, this.movingLeft, this.movingRight = false;
-    this.bombTimer = 0;
+    this.timeLeft = 0;
     this.bombSet = false;
     this.settingBomb = false;
     this.updateCount = 0;
-    this.tempTnt;
+    this.tempTnt = undefined;
   }
 
   die () {
@@ -26,6 +31,9 @@ export default class Saboteur {
   }
 
   create () {
+
+    this.timerBeep = this.game.sound.add('timer-beep');
+
     this.game.anims.create({
       key: 'saboteur-left',
       frames: this.game.anims.generateFrameNumbers('saboteur', { start: 0, end: 3 }),
@@ -64,9 +72,22 @@ export default class Saboteur {
   update () {
     this.updateCount++;
 
+    if (this.game.isGameOver()) {
+      return;
+    }
+
     if (this.bombSet) {
-      this.bombTimer --;
-      if (this.bombTimer === 0) {
+      this.timeLeft --;
+      this.updateTimer();
+      if (this.timeLeft < 300 && (this.timeLeft % 30 === 0)) {
+        this.tntTimer.setVisible(false);
+        if (this.timeLeft % 60 === 0) {
+          this.timerBeep.play();
+          this.tntTimer.setVisible(true);
+        }
+      }
+      if (this.timeLeft === 0) {
+        this.bombSet = false;
         // Bomb goes off
         // TODO: handle explosion
         this.game.gameOver();
@@ -77,9 +98,12 @@ export default class Saboteur {
       if (this.settingBomb) {
         this.settingBomb = false;
         this.tempTnt.destroy();
-        this.tnt.addTnt(this.saboteur.x, 70, this.bombTimer);
+        this.tntTimer = this.game.add.text(200, 2, this.getTimerText(), style);
+        this.tntTimer.setScrollFactor(0);
+        this.tntTimer.setDepth(2);
+        this.tnt.addTnt(this.saboteur.x, 75);
         this.bombSet = true;
-        this.bombTimer = defaultBombTimer;
+        this.timeLeft = defaultBombTimer;
         this.movingTo = (Math.random() < 0.5) ? minMovingFrom : maxMovingTo;
         return;
       }
@@ -124,7 +148,17 @@ export default class Saboteur {
 
   disarmBomb () {
     this.bombSet = false;
-    this.bombTimer = 0;
+    this.tntTimer.destroy();
+  }
+
+  getTimerText () {
+    if (this.timeLeft < 0) return '00:00';
+    let secondsLeft = Math.round(this.timeLeft / 60);
+    return '00:' + ((secondsLeft < 10) ? '0' : '') + secondsLeft;
+  }
+
+  updateTimer() {
+    this.tntTimer.setText(this.getTimerText());
   }
 
   getBody () {

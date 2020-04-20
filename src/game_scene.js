@@ -18,6 +18,7 @@ import GreyscalePipeline from './greyscale_pipeline';
 export default class GameScene extends Phaser.Scene {
   constructor (config) {
     super(config);
+    this.finished = false;
     this.background = new Background(this);
     this.birdie = new Birdie(this);
     this.plateau = new Plateau(this);
@@ -45,6 +46,8 @@ export default class GameScene extends Phaser.Scene {
     this.load.audio('pickup-money-bag', ['../assets/pickup-money-bag.ogg']);
     this.load.audio('pickup-bullets', ['../assets/pickup-bullets.ogg']);
     this.load.audio('pickup-food', ['../assets/pickup-food.ogg']);
+    this.load.audio('timer-beep', ['../assets/timer-beep.ogg']);
+    this.load.audio('bomb-disarm', ['../assets/bomb-disarm.ogg']);
     this.background.preload();
     this.birdie.preload();
     this.plateau.preload();
@@ -99,7 +102,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.tnt.getTntStaticGroup(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.collider(this.tnt.getTntStaticGroup(), this.crates.getCratesStaticGroup());
 
-    this.cameras.main.startFollow(this.saboteur.getBody(), true, 0.05, 0.05);
+    this.cameras.main.startFollow(this.player.getBody(), true, 0.05, 0.05);
     this.deathMusic = this.sound.add('death-music');
     this.music = this.sound.add('music');
     this.music.setVolume(0.8);
@@ -110,10 +113,13 @@ export default class GameScene extends Phaser.Scene {
     this.pickupMoneyBagSound = this.sound.add('pickup-money-bag');
     this.pickupBulletsSound = this.sound.add('pickup-bullets');
     this.pickupFoodSound = this.sound.add('pickup-food');
+    this.bombDisarmSound = this.sound.add('bomb-disarm');
     this.trainSound = this.sound.add('train');
     this.trainSound.setVolume(0.8);
     this.trainSound.setLoop(true);
     this.trainSound.play();
+
+    this.disarmedBomb = this.physics.add.group();
   }
 
   update() {
@@ -130,8 +136,14 @@ export default class GameScene extends Phaser.Scene {
   }
 
   playerDisarmBomb(player, tnt) {
-    this.saboteur.disarmbomb();
+    this.saboteur.disarmBomb();
     tnt.destroy();
+    if (this.disarmedTnt) {
+      this.disarmedTnt.destroy();
+    }
+    this.bombDisarmSound.play();
+    this.disarmedTnt = this.disarmedBomb.create(player.x, player.y + 10, 'tnt');
+    this.disarmedTnt.setDepth(6);
   }
 
   playerPickupGold(player, gold) {
@@ -168,7 +180,12 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
+  isGameOver() {
+    return this.finished;
+  }
+
   gameOver() {
+    this.finished = true;
     this.music.stop();
     this.deathMusic.play()
     this.player.die();

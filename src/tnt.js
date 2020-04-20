@@ -1,8 +1,3 @@
-const style = {
-  font: '10px courier',
-  fill: '#F00',
-  align: 'center'
-};
 
 export default class Tnt {
   constructor (game) {
