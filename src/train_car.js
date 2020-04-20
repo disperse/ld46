@@ -7,9 +7,10 @@ const layouts = [
   {
     name: 'passenger-car-one',
     sprite: 'passenger_car',
+    bandits: true,
     spriteIndex: '0',
-    chandeliers: [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-    tables: [0, 1, 0, 2, 0, 1, 0, 4, 0, 1, 0, 3, 0]
+    chandeliers: [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    tables: [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 3]
   },
   {
     name: 'cargo-car-one',
@@ -18,10 +19,26 @@ const layouts = [
     crates: [ [], [], [], [1], [1,1], [1], [], [], [1], [1,1], [1], [], [] ],
   },
   {
+    name: 'passenger-car-two',
+    sprite: 'passenger_car',
+    bandits: true,
+    spriteIndex: '0',
+    chandeliers: [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0],
+    tables: [0, 2, 0, 0, 0, 0, 1, 0, 0, 1, 0, 4, 0]
+  },
+  {
     name: 'cargo-car-two',
     sprite: 'cargo_car',
     spriteIndex: '1',
     crates: [ [], [], [], [1], [1,1], [1,1,1], [1,1], [1], [], [], [], [], [] ],
+  },
+  {
+    name: 'passenger-car-three',
+    sprite: 'passenger_car',
+    bandits: true,
+    spriteIndex: '0',
+    chandeliers: [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+    tables: [0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4]
   },
   {
     name: 'cargo-car-three',
@@ -30,28 +47,18 @@ const layouts = [
     crates: [ [], [], [1], [], [], [], [1], [], [], [], [1], [], [] ],
   },
   {
-    name: 'cargo-car-four',
-    sprite: 'cargo_car',
-    spriteIndex: '3',
-    crates: [ [1], [1,1], [1,1,1], [1,1,1], [1,1,1,1], [1,1,1,1], [1,1,1,1], [1,1,1], [1,1,1], [1,1], [1], [], [] ],
+    name: 'passenger-car-four',
+    sprite: 'passenger_car',
+    bandits: true,
+    spriteIndex: '0',
+    chandeliers: [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+    tables: [4, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0]
   },
   {
     name: 'cargo-car-five',
     sprite: 'cargo_car',
     spriteIndex: '4',
     crates: [ [], [1], [1,1], [1,1], [1,1], [1], [], [1], [1,1], [1,1], [1], [], [] ],
-  },
-  {
-    name: 'cargo-car-six',
-    sprite: 'cargo_car',
-    spriteIndex: '5',
-    crates: [ [1], [], [1], [], [1], [], [1], [], [1], [1], [1], [1], [] ],
-  },
-  {
-    name: 'cargo-car-seven',
-    sprite: 'cargo_car',
-    spriteIndex: '6',
-    crates: [],
   },
   {
     name: 'coal-car',
@@ -63,12 +70,13 @@ const layouts = [
 ]
 
 export default class TrainCars {
-  constructor (game, player, crates, wheels, gold) {
+  constructor (game, player, crates, wheels, gold, bandit) {
     this.game = game;
     this.player = player;
     this.crates = crates;
     this.wheels = wheels;
     this.gold = gold;
+    this.bandit = bandit;
   }
 
   preload () {
@@ -129,8 +137,18 @@ export default class TrainCars {
           table.setDepth(5);
         }
       }
-
     }
+
+    if (layout.bandits) {
+      for (let i = 0; i < 13; i++) {
+        if (Math.random() < 0.1) {
+          let from = startX + (i * 20);
+          let to = startX + (Math.random * 260);
+          let bandit = this.bandit.spawn(from, to);
+        }
+      }
+    }
+
     this.wheels.addWheel(x-98, 197);
     this.wheels.addWheel(x+98, 197);
     /*

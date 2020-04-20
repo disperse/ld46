@@ -3,6 +3,7 @@ import Background from './background.js';
 import Birdie from './birdie.js';
 import Plateau from './plateau.js';
 import Engine from './engine.js';
+import Bandit from './bandit.js';
 import TrainCars from './train_car.js';
 import Crates from './crates.js';
 import Wheels from './wheels.js';
@@ -33,7 +34,8 @@ export default class GameScene extends Phaser.Scene {
     this.crates = new Crates(this, this.player);
     this.wheels = new Wheels(this);
     this.gold = new Gold(this);
-    this.trainCars = new TrainCars(this, this.player, this.crates, this.wheels, this.gold);
+    this.bandit = new Bandit(this);
+    this.trainCars = new TrainCars(this, this.player, this.crates, this.wheels, this.gold, this.bandit);
     this.foreground = new Foreground(this);
     this.ammo = new Ammo(this);
     this.tnt = new Tnt(this)
@@ -63,6 +65,7 @@ export default class GameScene extends Phaser.Scene {
     this.gold.preload();
     this.score.preload();
     this.engine.preload();
+    this.bandit.preload();
     this.trainCars.preload();
     this.foreground.preload();
     this.health.preload();
@@ -83,6 +86,7 @@ export default class GameScene extends Phaser.Scene {
     this.gold.create();
     this.score.create();
     this.engine.create();
+    this.bandit.create();
     this.trainCars.create();
     this.foreground.create();
     this.health.create();
@@ -143,6 +147,7 @@ export default class GameScene extends Phaser.Scene {
     this.plateau.update();
     this.player.update();
     this.score.update();
+    this.bandit.update();
     this.foreground.update();
     this.health.update();
     this.ammo.update();

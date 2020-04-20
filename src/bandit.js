@@ -17,6 +17,8 @@ export default class Bandit {
   }
 
   create () {
+    this.bandits = this.game.physics.add.group();
+
     this.game.anims.create({
       key: 'bandit-left',
       frames: this.game.anims.generateFrameNumbers('bandit', { start: 0, end: 3 }),
@@ -42,11 +44,11 @@ export default class Bandit {
     this.alive = true;
     this.movingFrom = from;
     this.movingTo = to;
-    this.bandit = this.game.physics.add.sprite(from, 0, 'saboteur');
-    this.bandit.setDepth(5);
-    this.bandit.setBounce(0.1);
-    this.bandit.setSize(10, 16);
-    this.bandit.setCollideWorldBounds(false);
+    let bandit = this.game.physics.add.sprite(from, 0, 'saboteur');
+    bandit.setDepth(5);
+    bandit.setBounce(0.1);
+    bandit.setSize(10, 16);
+    bandit.setCollideWorldBounds(false);
   }
 
   update () {
@@ -81,6 +83,6 @@ export default class Bandit {
   }
 
   getBody () {
-    return this.bandit;
+    return this.bandits;
   }
 }

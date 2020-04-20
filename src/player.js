@@ -82,17 +82,11 @@ export default class Player {
 
     this.updateCount++;
 
-    if (this.cursors.left.isDown ||
-      (this.gamepad && this.gamepad.leftStick.x < -0.5) ||
-      (this.gamepad && this.gamepad.buttons[14].value === 1)) {
-      console.log('left');
+    if (this.goingLeft()) {
       this.player.setVelocityX(-speed);
       this.player.anims.play('left', true);
     }
-    else if (this.cursors.right.isDown ||
-      (this.gamepad && this.gamepad.leftStick.x > 0.5) ||
-      (this.gamepad && this.gamepad.buttons[15].value === 1)) {
-      console.log('right');
+    else if (this.goingRight()) {
       this.player.setVelocityX(speed);
       this.player.anims.play('right', true);
     }
@@ -105,7 +99,7 @@ export default class Player {
     if (this.coalBrick && (this.coalBrick.x > (this.player.x + 90))) {
       this.coalBrick.destroy();
     }
-    if ((!this.cursors.left.isDown) && (!this.cursors.right.isDown)) {
+    if ((!this.goingRight()) && (!this.goingLeft())) {
       this.player.setVelocityX(0);
       if (Phaser.Geom.Rectangle.ContainsRect(this.engine.getCoalBucket().getBounds(), this.player.getBounds())) {
         // Player is standing by the coal bucket
@@ -128,6 +122,14 @@ export default class Player {
       this.health.setHealth(0);
       this.game.gameOver();
     }
+  }
+
+  goingRight () {
+    return (this.cursors.right.isDown | (this.gamepad && this.gamepad.leftStick.x > 0.5) || (this.gamepad && this.gamepad.buttons[15].value === 1));
+  }
+
+  goingLeft () {
+    return (this.cursors.left.isDown | (this.gamepad && this.gamepad.leftStick.x < -0.5) || (this.gamepad && this.gamepad.buttons[14].value === 1));
   }
 
   getBody() {
