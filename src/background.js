@@ -2,6 +2,7 @@ export default class Background {
   constructor (game) {
     this.game = game;
     this.updateCount = 0;
+    this.stopped = false;
   }
 
   preload () {
@@ -15,9 +16,15 @@ export default class Background {
   }
 
   update () {
+    if (this.stopped) return;
+
     if (this.updateCount % 95 === 0) {
       this.tileSprite.tilePositionX++;
     }
     this.updateCount++;
+  }
+
+  stop () {
+    this.stopped = true;
   }
 }

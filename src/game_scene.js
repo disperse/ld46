@@ -159,6 +159,13 @@ export default class GameScene extends Phaser.Scene {
     this.music.stop();
     this.deathMusic.play()
     this.player.die();
+    this.foreground.stop();
+    this.plateau.stop();
+    this.background.stop();
+
+    this.cameras.main.stopFollow();
+    this.cameras.main.removeBounds();
+    this.cameras.main.pan(-1000, 112, 1500);
 
     setTimeout(() => {
       this.cameras.main.setRenderToTexture(this.greyscalePipeline);

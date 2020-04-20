@@ -93,13 +93,17 @@ export default class TrainCars {
     this.wheels.addWheel(x+115, 190);
     this.wheels.addWheel(x+80, 190);
     */
-    this.spawn(x);
+    if (x > 200) {
+      this.spawn(x);
+    }
   }
 
   spawn (x) {
     const startX = x - 120;
     for (let x = startX; x < startX + 260; x += 20) {
-      this.gold.addGold(x, 60, this.getSpawnType());
+      if (Math.random() < 0.2) {
+        this.gold.addGold(x, 60, this.getSpawnType());
+      }
     }
   }
 

@@ -3,6 +3,7 @@ export default class Foreground {
     this.game = game;
     this.bushes = [];
     this.updateCount = 0;
+    this.stopped = false;
   }
 
   preload () {
@@ -17,6 +18,8 @@ export default class Foreground {
   }
 
   update () {
+    if (this.stopped) return;
+
     if (this.updateCount % 30 === 0) {
       if (Math.random() < 0.5) {
         let bush = this.game.add.sprite(450, 180 + (Math.random() * 40), 'bush');
@@ -39,5 +42,9 @@ export default class Foreground {
       }
     }
     this.updateCount++;
+  }
+
+  stop () {
+    this.stopped = true;
   }
 }
