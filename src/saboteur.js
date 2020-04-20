@@ -33,6 +33,7 @@ export default class Saboteur {
   create () {
 
     this.timerBeep = this.game.sound.add('timer-beep');
+    this.explosion = this.game.sound.add('explosion');
 
     this.game.anims.create({
       key: 'saboteur-left',
@@ -88,6 +89,7 @@ export default class Saboteur {
       }
       if (this.timeLeft === 0) {
         this.bombSet = false;
+        this.explosion.play();
         // Bomb goes off
         // TODO: handle explosion
         this.game.gameOver();

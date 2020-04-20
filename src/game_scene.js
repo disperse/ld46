@@ -48,6 +48,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.audio('pickup-food', ['../assets/pickup-food.ogg']);
     this.load.audio('timer-beep', ['../assets/timer-beep.ogg']);
     this.load.audio('bomb-disarm', ['../assets/bomb-disarm.ogg']);
+    this.load.audio('explosion', ['../assets/explosion.ogg']);
     this.background.preload();
     this.birdie.preload();
     this.plateau.preload();
