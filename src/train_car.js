@@ -50,11 +50,12 @@ const layouts = [
 ]
 
 export default class TrainCars {
-  constructor (game, player, crates, wheels) {
+  constructor (game, player, crates, wheels, gold) {
     this.game = game;
     this.player = player;
     this.crates = crates;
     this.wheels = wheels;
+    this.gold = gold;
   }
 
   preload () {
@@ -92,6 +93,29 @@ export default class TrainCars {
     this.wheels.addWheel(x+115, 190);
     this.wheels.addWheel(x+80, 190);
     */
+    this.spawn(x);
+  }
+
+  spawn (x) {
+    const startX = x - 120;
+    for (let x = startX; x < startX + 260; x += 20) {
+      this.gold.addGold(x, 60, this.getSpawnType());
+    }
+  }
+
+  getSpawnType () {
+    let rand = Math.random();
+    if (rand < 0.2) {
+      return 19;
+    } else if (rand < 0.4) {
+      return 20;
+    } else if (rand < 0.6) {
+      return 21;
+    } else  if (rand < 0.8) {
+      return 22;
+    } else {
+      return 23;
+    }
   }
 
   getPlatformsStaticGroup () {

@@ -1,5 +1,5 @@
 const speed = 100;
-const jumpHeight = 200;
+const jumpHeight = 150;
 
 export default class Saboteur {
   constructor (game) {

@@ -4,10 +4,11 @@ const speed = 100;
 const jumpHeight = 150;
 
 export default class Player {
-  constructor (game, health) {
+  constructor (game, health, score) {
     this.game = game;
     this.health = health;
     this.alive = true;
+    this.score = score;
   }
 
   die () {
@@ -18,9 +19,11 @@ export default class Player {
   preload () {
     this.game.load.spritesheet('player', '../assets/player_144x17_v2.png', { frameWidth: 16, frameHeight: 17 });
     this.game.load.spritesheet('death', '../assets/death_animation.png', { frameWidth: 16, frameHeight: 17 });
+    this.game.load.audio('jump', ['../assets/jump.ogg']);
   }
 
   create () {
+    this.jumpSound = this.game.sound.add('jump');
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.player = this.game.physics.add.sprite(100, 100, 'player');
     this.player.setDepth(5);
@@ -72,6 +75,7 @@ export default class Player {
     }
 
     if (this.cursors.up.isDown && this.player.body.touching.down) {
+      this.jumpSound.play();
       this.player.setVelocityY(-jumpHeight);
     }
 
@@ -84,5 +88,9 @@ export default class Player {
 
   getBody() {
     return this.player;
+  }
+
+  addScore(s) {
+    this.score.addScore(s);
   }
 }

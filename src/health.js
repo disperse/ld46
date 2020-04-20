@@ -1,8 +1,10 @@
+const maxHealth = 6;
+
 export default class Health {
 
   constructor (game) {
     this.game = game;
-    this.health = 6.0;
+    this.health = 3.0;
     this.healthSprites = [];
     this.updateCount = 0;
   }
@@ -56,5 +58,13 @@ export default class Health {
   setHealth(h) {
     this.health = h;
     this.updateHealth();
+  }
+
+  heal () {
+    if (this.health === maxHealth) {
+      return false;
+    }
+    this.addHealth(1);
+    return true;
   }
 }
