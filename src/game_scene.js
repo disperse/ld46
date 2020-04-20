@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import Background from './background.js';
 import Birdie from './birdie.js';
 import Plateau from './plateau.js';
+import Engine from './engine.js';
 import TrainCars from './train_car.js';
 import Crates from './crates.js';
 import Wheels from './wheels.js';
@@ -26,7 +27,9 @@ export default class GameScene extends Phaser.Scene {
     this.plateau = new Plateau(this);
     this.health = new Health(this);
     this.score = new Score(this);
-    this.player = new Player(this, this.health, this.score);
+    this.engine = new Engine(this);
+    this.steam = new Steam(this);
+    this.player = new Player(this, this.health, this.score, this.engine, this.steam);
     this.crates = new Crates(this, this.player);
     this.wheels = new Wheels(this);
     this.gold = new Gold(this);
@@ -34,7 +37,6 @@ export default class GameScene extends Phaser.Scene {
     this.foreground = new Foreground(this);
     this.ammo = new Ammo(this);
     this.tnt = new Tnt(this)
-    this.steam = new Steam(this);
     this.saboteur = new Saboteur(this, this.tnt)
   }
 
@@ -60,6 +62,7 @@ export default class GameScene extends Phaser.Scene {
     this.wheels.preload();
     this.gold.preload();
     this.score.preload();
+    this.engine.preload();
     this.trainCars.preload();
     this.foreground.preload();
     this.health.preload();
@@ -70,8 +73,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setBounds(0, 0, 3200, 225);
-    this.physics.world.setBounds(0, 0, 3200, 225);
+    this.cameras.main.setBounds(0, 0, 3600, 225);
+    this.physics.world.setBounds(0, 0, 3600, 225);
 
     this.background.create();
     this.birdie.create();
@@ -79,8 +82,8 @@ export default class GameScene extends Phaser.Scene {
     this.crates.create();
     this.gold.create();
     this.score.create();
+    this.engine.create();
     this.trainCars.create();
-    this.player.create();
     this.foreground.create();
     this.health.create();
     this.ammo.create();
@@ -89,13 +92,19 @@ export default class GameScene extends Phaser.Scene {
     this.steam.create();
 
 
-    for (let i = 0; i < 9; i++) {
-      let x = 200 + (i * 330);
+    let x;
+    for (let i = 0; i < 10; i++) {
+      x = 200 + (i * 330);
       this.trainCars.addTrainCar(x, i);
     }
 
+    this.engine.addEngine(x + 363);
+    // add player x - 109
+    this.player.create(x + 254);
+
     this.physics.add.collider(this.saboteur.getBody(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.collider(this.player.getBody(), this.trainCars.getPlatformsStaticGroup());
+    this.physics.add.collider(this.player.getBody(), this.engine.getPlatformsStaticGroup());
 
     this.physics.add.collider(this.saboteur.getBody(), this.crates.getCratesStaticGroup());
     this.physics.add.collider(this.player.getBody(), this.crates.getCratesStaticGroup());
@@ -203,7 +212,7 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.stopFollow();
     this.cameras.main.removeBounds();
     if (outOfSteam) {
-      this.cameras.main.pan(0, 112, 1500, 'Linear');
+      this.cameras.main.pan(-40, 112, 1500, 'Expo');
     } else {
       this.cameras.main.pan(-1000, 112, 1500);
     }
@@ -226,14 +235,23 @@ export default class GameScene extends Phaser.Scene {
       gameOverText.setDepth(7);
       gameOverText.setScrollFactor(0);
 
-      let gameOverText2 = this.add.text(200, 100, "Your final score was: " + this.score.getScoreText(), {
-        font: '18px courier',
+      let gameOverText2 = this.add.text(200, 70, (outOfSteam) ? "You ran out of steam." : "You failed to protect the train.", {
+        font: '16px courier',
         fill: '#000000',
         align: 'center'
       });
       gameOverText2.setOrigin(0.5);
       gameOverText2.setDepth(7);
       gameOverText2.setScrollFactor(0);
+
+      let gameOverText3 = this.add.text(200, 100, "Your score was " + this.score.getScoreText(), {
+        font: '16px courier',
+        fill: '#000000',
+        align: 'center'
+      });
+      gameOverText3.setOrigin(0.5);
+      gameOverText3.setDepth(7);
+      gameOverText3.setScrollFactor(0);
     }, 1500);
   }
 

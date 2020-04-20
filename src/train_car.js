@@ -51,12 +51,14 @@ const layouts = [
     name: 'cargo-car-seven',
     sprite: 'cargo_car',
     spriteIndex: '6',
-    crates: [ [1], [1,1], [1], [], [1], [1,1], [1], [], [1], [1,1], [1], [1,1], [1] ],
+    crates: [],
   },
   {
     name: 'coal-car',
     sprite: 'coal_car',
-    spriteIndex: '0'
+    spriteIndex: '0',
+    floorOffset: -20,
+    spawn: false
   },
 ]
 
@@ -95,7 +97,8 @@ export default class TrainCars {
     hydraulics.setDepth(6);
     let platformX = x;
     let platformScale = 1.5;
-    this.platforms.create(platformX, 177, 'ground').setScale(platformScale).refreshBody(); // floor
+    let floorY = (layout.floorOffset) ? 177 + layout.floorOffset : 177;
+    this.platforms.create(platformX, floorY, 'ground').setScale(platformScale).refreshBody(); // floor
     this.platforms.create(platformX, 64, 'ground').setScale(platformScale).refreshBody(); // ceiling
     if (x > 200) {
       const hitch = this.game.add.sprite(x - 165, 185, 'hitch');
@@ -136,7 +139,7 @@ export default class TrainCars {
     this.wheels.addWheel(x+115, 190);
     this.wheels.addWheel(x+80, 190);
     */
-    if (x > 200) {
+    if (layout.spawn === undefined || layout.spawn) {
       this.spawn(x);
     }
   }

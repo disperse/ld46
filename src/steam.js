@@ -25,7 +25,7 @@ export default class Steam {
       }
       return
     }
-    if (this.updateCount % 120 === 0 && this.steam > 0) {
+    if (this.updateCount % 240 === 0 && this.steam > 0) {
       this.steam -= 1;
       this.updateSteam();
     }
@@ -37,6 +37,12 @@ export default class Steam {
       }
     }
     this.updateCount++;
+  }
+
+  fillCoal () {
+    if (this.steam < 15) {
+      this.steam++;
+    }
   }
 
   updateSteam () {
