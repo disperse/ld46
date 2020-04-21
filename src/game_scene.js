@@ -58,6 +58,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.audio('timer-beep', ['../assets/timer-beep.ogg']);
     this.load.audio('bomb-disarm', ['../assets/bomb-disarm.ogg']);
     this.load.audio('explosion', ['../assets/explosion.ogg']);
+    this.load.audio('hurt', ['../assets/hurt.ogg']);
     this.bullets.preload();
     this.background.preload();
     this.birdie.preload();
@@ -126,7 +127,8 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.tnt.getTntStaticGroup(), this.player.getBody(), this.playerDisarmBomb, null, this);
     this.physics.add.collider(this.tnt.getTntStaticGroup(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.collider(this.tnt.getTntStaticGroup(), this.crates.getCratesStaticGroup());
-    //this.physics.add.overlap(this.bullets.getBulletPhysicsGroup(), this.player.getBody(), this.playerShot, null, this);
+    this.physics.add.overlap(this.bandit.getBulletPhysicsGroup(), this.player.getBody(), this.playerShot, null, this);
+    this.physics.add.overlap(this.bandit.getBulletPhysicsGroup(), this.crates.getCratesStaticGroup(), this.bulletCrate, null, this);
     //this.physics.add.overlap(this.bullets.getBulletPhysicsGroup(), this.bandit.getBody(), this.banditShot, null, this);
 
     this.cameras.main.startFollow(this.player.getBody(), true, 0.05, 0.05);
@@ -141,6 +143,7 @@ export default class GameScene extends Phaser.Scene {
     this.pickupBulletsSound = this.sound.add('pickup-bullets');
     this.pickupFoodSound = this.sound.add('pickup-food');
     this.bombDisarmSound = this.sound.add('bomb-disarm');
+    this.playerHurt = this.sound.add('hurt');
     this.trainSound = this.sound.add('train');
     this.trainSound.setVolume(0.8);
     this.trainSound.setLoop(true);
@@ -163,6 +166,7 @@ export default class GameScene extends Phaser.Scene {
     this.wheels.update();
     this.saboteur.update();
     this.steam.update();
+    this.bullets.update();
   }
 
   playerDisarmBomb(player, tnt) {
@@ -176,9 +180,14 @@ export default class GameScene extends Phaser.Scene {
     this.disarmedTnt.setDepth(6);
   }
 
+  bulletCrate(bullet, crate) {
+    bullet.destroy();
+  }
+
   playerShot(player, bullet) {
     bullet.destroy();
     this.health.addHealth(-1);
+    this.playerHurt.play();
   }
 
   banditShot(bandit, bullet) {

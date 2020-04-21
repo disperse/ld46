@@ -19,6 +19,7 @@ export default class Bandit {
 
   create () {
     this.physicsGroup = this.game.physics.add.group();
+    this.bulletPhysicsGroup = this.game.physics.add.group({ allowGravity: false });
 
     this.game.anims.create({
       key: 'bandit-left',
@@ -49,22 +50,37 @@ export default class Bandit {
     bandit.setCollideWorldBounds(false);
     bandit.movingFrom = from;
     bandit.movingTo = to;
+    bandit.nextShot = (Math.random() * 180) + 180;
     this.bandits.push(bandit);
   }
 
   shoot (x, movingLeft) {
-    this.bullets.addBullet(x, (movingLeft) ? -100 : 100);
+    let bulletX = x + ((movingLeft) ? -5 : 5);
+    this.bullets.addBullet(bulletX, (movingLeft) ? -100 : 100, 200, this.bulletPhysicsGroup);
   }
 
   update () {
     this.updateCount++;
 
+    this.bulletPhysicsGroup.children.iterate((bullet) => {
+      if (bullet && bullet.lifetime-- < 0) {
+        bullet.destroy();
+      }
+    });
+
     if (this.game.isGameOver()) {
       return;
     }
 
+
     for (let i = 0; i < this.bandits.length; i++) {
       let bandit = this.bandits[i];
+
+      if (this.updateCount % bandit.nextShot < 5) {
+        this.shoot(bandit.x, bandit.movingLeft);
+        bandit.nextShot = (Math.random() * 180) + 180;
+      }
+
       if (Math.abs(bandit.x - bandit.movingTo) < 2) {
         bandit.anims.play('bandit-turn', true);
 
@@ -74,7 +90,6 @@ export default class Bandit {
         let tempMovingTo = bandit.movingTo;
         bandit.movingTo = bandit.movingFrom;
         bandit.movingFrom = tempMovingTo;
-        this.shoot(bandit.x, bandit.movingLeft);
       } else {
         if (bandit.x > bandit.movingTo) {
           bandit.movingLeft = true;
@@ -92,5 +107,9 @@ export default class Bandit {
 
   getBody () {
     return this.physicsGroup;
+  }
+
+  getBulletPhysicsGroup () {
+    return this.bulletPhysicsGroup;
   }
 }

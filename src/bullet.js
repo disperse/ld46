@@ -9,17 +9,13 @@ export default class Bullet {
   }
 
   create () {
-    this.physicsGroup = this.game.physics.add.group({ allowGravity: false });
   }
 
-  getBulletPhysicsGroup() {
-    return this.physicsGroup;
-  }
-
-  addBullet (x, speed) {
-    let bullet = this.physicsGroup.create(x, 165, 'bullet');
+  addBullet (x, speed, lifetime, physicsGroup) {
+    let bullet = physicsGroup.create(x, 165, 'bullet');
     bullet.setDepth(8);
     bullet.setVelocityX(speed);
+    bullet.lifetime = lifetime;
   }
 
   update () {
