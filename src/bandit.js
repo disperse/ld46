@@ -59,7 +59,7 @@ export default class Bandit {
     // TODO: put shootSound back in relative to distance from player
     //this.shootSound.play();
     let bulletX = x + ((movingLeft) ? -5 : 5);
-    this.bullets.addBullet(bulletX, (movingLeft) ? -100 : 100, 200, this.bulletPhysicsGroup);
+    this.bullets.addBullet(bulletX, (movingLeft) ? -100 : 100, 90, this.bulletPhysicsGroup);
   }
 
   update () {

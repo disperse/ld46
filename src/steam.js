@@ -40,8 +40,9 @@ export default class Steam {
   }
 
   fillCoal () {
-    if (this.steam < 15) {
+    if (this.steam < 14) {
       this.steam++;
+      this.steamGauge.setVisible(true);
       this.updateSteam();
     }
   }

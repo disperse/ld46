@@ -110,8 +110,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.engine.addEngine(x + 363);
     // add player x - 109
-    //this.player.create(x + 254);
-    this.player.create(200);
+    this.player.create(x + 254);
+    //this.player.create(200);
 
     this.physics.add.collider(this.saboteur.getBody(), this.trainCars.getPlatformsStaticGroup());
     this.physics.add.collider(this.player.getBody(), this.trainCars.getPlatformsStaticGroup());
@@ -130,6 +130,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.tnt.getTntStaticGroup(), this.crates.getCratesStaticGroup());
     this.physics.add.overlap(this.bandit.getBulletPhysicsGroup(), this.player.getBody(), this.playerShot, null, this);
     this.physics.add.overlap(this.bandit.getBulletPhysicsGroup(), this.crates.getCratesStaticGroup(), this.bulletCrate, null, this);
+    this.physics.add.overlap(this.player.getBulletPhysicsGroup(), this.crates.getCratesStaticGroup(), this.bulletCrate, null, this);
     this.physics.add.overlap(this.player.getBulletPhysicsGroup(), this.bandit.getBody(), this.banditShot, null, this);
 
     this.cameras.main.startFollow(this.player.getBody(), true, 0.05, 0.05);

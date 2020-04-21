@@ -1,3 +1,5 @@
+const respawnChance = 0.4;
+
 const layouts = [
   {
     name: 'caboose',
@@ -77,6 +79,7 @@ export default class TrainCars {
     this.wheels = wheels;
     this.gold = gold;
     this.bandit = bandit;
+    this.updateCount = 0;
   }
 
   preload () {
@@ -95,6 +98,23 @@ export default class TrainCars {
   create () {
     this.platforms = this.game.physics.add.staticGroup();
     this.platforms.setDepth(0);
+  }
+
+  update () {
+    this.updateCount++;
+    if (this.updateCount % 1800 < 1) {
+      this.respawn();
+    }
+  }
+
+  respawn () {
+    for (let i = 0; i < 10; i++) {
+      let x = 200 + (i * 330);
+      let layout = layouts[i];
+      if ((layout.spawn === undefined || layout.spawn) && (Math.random() < respawnChance)) {
+        this.spawn(x);
+      }
+    }
   }
 
   addTrainCar (x, layoutIndex) {

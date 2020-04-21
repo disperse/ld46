@@ -91,10 +91,14 @@ export default class Player {
     if (this.goingLeft()) {
       this.player.setVelocityX(-speed);
       this.player.anims.play('left', true);
+      this.facingRight = false;
+      this.facingLeft = true;
     }
     else if (this.goingRight()) {
       this.player.setVelocityX(speed);
       this.player.anims.play('right', true);
+      this.facingRight = true;
+      this.facingLeft = false;
     }
 
     if (this.player.body.touching.down && (this.cursors.up.isDown || this.gamepad && this.gamepad.A)) {
@@ -123,7 +127,7 @@ export default class Player {
           this.coalBrick.setDepth(8);
         }
       } else {
-        this.player.anims.play('turn');
+        //this.player.anims.play('turn');
       }
     }
 
@@ -143,11 +147,11 @@ export default class Player {
   }
 
   shoot () {
-    if ((this.ammo.getAmmo() < 1) || this.bulletDelay > 0 || (!this.goingRight && !this.goingLeft)) return;
+    if ((this.ammo.getAmmo() < 1) || this.bulletDelay > 0 || (!this.facingLeft && !this.facingRight)) return;
     this.shootSound.play();
     this.ammo.addAmmo(-1);
-    let bulletX = this.player.x + ((this.goingLeft()) ? -10 : 10);
-    this.bullets.addBullet(bulletX, (this.goingLeft()) ? -200 : 200, 200, this.bulletPhysicsGroup);
+    let bulletX = this.player.x + ((this.facingLeft) ? -10 : 10);
+    this.bullets.addBullet(bulletX, (this.facingLeft) ? -200 : 200, 200, this.bulletPhysicsGroup);
     this.bulletDelay = bDelay;
   }
 
