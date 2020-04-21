@@ -18,6 +18,7 @@ export default class Bandit {
   }
 
   create () {
+    this.shootSound = this.game.sound.add('shoot');
     this.physicsGroup = this.game.physics.add.group();
     this.bulletPhysicsGroup = this.game.physics.add.group({ allowGravity: false });
 
@@ -55,6 +56,8 @@ export default class Bandit {
   }
 
   shoot (x, movingLeft) {
+    // TODO: put shootSound back in relative to distance from player
+    //this.shootSound.play();
     let bulletX = x + ((movingLeft) ? -5 : 5);
     this.bullets.addBullet(bulletX, (movingLeft) ? -100 : 100, 200, this.bulletPhysicsGroup);
   }
@@ -73,9 +76,7 @@ export default class Bandit {
     }
 
 
-    for (let i = 0; i < this.bandits.length; i++) {
-      let bandit = this.bandits[i];
-
+    this.physicsGroup.children.iterate((bandit) => {
       if (this.updateCount % bandit.nextShot < 5) {
         this.shoot(bandit.x, bandit.movingLeft);
         bandit.nextShot = (Math.random() * 180) + 180;
@@ -102,7 +103,7 @@ export default class Bandit {
           bandit.anims.play('bandit-right', true);
         }
       }
-    }
+    });
   }
 
   getBody () {

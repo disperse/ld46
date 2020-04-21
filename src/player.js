@@ -2,16 +2,20 @@ import Phaser from 'phaser';
 
 const speed = 120;
 const jumpHeight = 150;
+const bDelay = 30;
 
 export default class Player {
-  constructor (game, health, score, engine, steam) {
+  constructor (game, health, score, engine, steam, bullets, ammo) {
     this.game = game;
     this.health = health;
     this.alive = true;
     this.score = score;
     this.engine = engine;
     this.steam = steam;
+    this.bullets = bullets;
+    this.ammo = ammo;
     this.updateCount = 0;
+    this.bulletDelay = 0;
   }
 
   die () {
@@ -29,6 +33,8 @@ export default class Player {
   }
 
   create (x) {
+    this.bulletPhysicsGroup = this.game.physics.add.group({ allowGravity: false });
+    this.shootSound = this.game.sound.add('shoot');
     this.jumpSound = this.game.sound.add('jump');
     this.shovelSound = this.game.sound.add('shovel');
     this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -79,8 +85,8 @@ export default class Player {
 
   update () {
     if (! this.alive) return;
-
     this.updateCount++;
+    this.bulletDelay--;
 
     if (this.goingLeft()) {
       this.player.setVelocityX(-speed);
@@ -94,6 +100,10 @@ export default class Player {
     if (this.player.body.touching.down && (this.cursors.up.isDown || this.gamepad && this.gamepad.A)) {
       this.jumpSound.play();
       this.player.setVelocityY(-jumpHeight);
+    }
+
+    if (this.cursors.space.isDown || this.gamepad && this.gamepad.X) {
+      this.shoot();
     }
 
     if (this.coalBrick && (this.coalBrick.x > (this.player.x + 90))) {
@@ -132,8 +142,21 @@ export default class Player {
     return (this.cursors.left.isDown || (this.gamepad && this.gamepad.left) || (this.gamepad && this.gamepad.leftStick.x < -0.5) || (this.gamepad && this.gamepad.buttons[14].value === 1));
   }
 
+  shoot () {
+    if ((this.ammo.getAmmo() < 1) || this.bulletDelay > 0 || (!this.goingRight && !this.goingLeft)) return;
+    this.shootSound.play();
+    this.ammo.addAmmo(-1);
+    let bulletX = this.player.x + ((this.goingLeft()) ? -10 : 10);
+    this.bullets.addBullet(bulletX, (this.goingLeft()) ? -200 : 200, 200, this.bulletPhysicsGroup);
+    this.bulletDelay = bDelay;
+  }
+
   getBody() {
     return this.player;
+  }
+
+  getBulletPhysicsGroup() {
+    return this.bulletPhysicsGroup;
   }
 
   addScore(s) {

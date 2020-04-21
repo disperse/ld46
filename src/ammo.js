@@ -45,6 +45,10 @@ export default class Ammo {
     this.updateAmmo();
   }
 
+  getAmmo() {
+    return this.ammo;
+  }
+
   reload () {
     if (this.ammo === 6) return false;
     this.ammo = 6;

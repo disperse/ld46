@@ -42,6 +42,7 @@ export default class Steam {
   fillCoal () {
     if (this.steam < 15) {
       this.steam++;
+      this.updateSteam();
     }
   }
 

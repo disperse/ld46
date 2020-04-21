@@ -32,14 +32,14 @@ export default class GameScene extends Phaser.Scene {
     this.engine = new Engine(this);
     this.steam = new Steam(this);
     this.bullets = new Bullets(this);
-    this.player = new Player(this, this.health, this.score, this.engine, this.steam, this.bullets);
+    this.ammo = new Ammo(this);
+    this.player = new Player(this, this.health, this.score, this.engine, this.steam, this.bullets, this.ammo);
     this.crates = new Crates(this, this.player);
     this.wheels = new Wheels(this);
     this.gold = new Gold(this);
     this.bandit = new Bandit(this, this.bullets);
     this.trainCars = new TrainCars(this, this.player, this.crates, this.wheels, this.gold, this.bandit);
     this.foreground = new Foreground(this);
-    this.ammo = new Ammo(this);
     this.tnt = new Tnt(this)
     this.saboteur = new Saboteur(this, this.tnt)
   }
@@ -59,6 +59,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.audio('bomb-disarm', ['../assets/bomb-disarm.ogg']);
     this.load.audio('explosion', ['../assets/explosion.ogg']);
     this.load.audio('hurt', ['../assets/hurt.ogg']);
+    this.load.audio('shoot', ['../assets/shoot.ogg']);
     this.bullets.preload();
     this.background.preload();
     this.birdie.preload();
@@ -129,7 +130,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.tnt.getTntStaticGroup(), this.crates.getCratesStaticGroup());
     this.physics.add.overlap(this.bandit.getBulletPhysicsGroup(), this.player.getBody(), this.playerShot, null, this);
     this.physics.add.overlap(this.bandit.getBulletPhysicsGroup(), this.crates.getCratesStaticGroup(), this.bulletCrate, null, this);
-    //this.physics.add.overlap(this.bullets.getBulletPhysicsGroup(), this.bandit.getBody(), this.banditShot, null, this);
+    this.physics.add.overlap(this.player.getBulletPhysicsGroup(), this.bandit.getBody(), this.banditShot, null, this);
 
     this.cameras.main.startFollow(this.player.getBody(), true, 0.05, 0.05);
     this.deathMusic = this.sound.add('death-music');
