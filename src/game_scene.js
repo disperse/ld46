@@ -29,13 +29,13 @@ export default class GameScene extends Phaser.Scene {
     this.plateau = new Plateau(this);
     this.health = new Health(this);
     this.score = new Score(this);
-    this.engine = new Engine(this);
+    this.wheels = new Wheels(this);
+    this.engine = new Engine(this, this.wheels);
     this.steam = new Steam(this);
     this.bullets = new Bullets(this);
     this.ammo = new Ammo(this);
     this.player = new Player(this, this.health, this.score, this.engine, this.steam, this.bullets, this.ammo);
     this.crates = new Crates(this, this.player);
-    this.wheels = new Wheels(this);
     this.gold = new Gold(this);
     this.bandit = new Bandit(this, this.bullets);
     this.trainCars = new TrainCars(this, this.player, this.crates, this.wheels, this.gold, this.bandit);
@@ -195,10 +195,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   banditShot(bandit, bullet) {
-    console.log('count before', this.bandit.getBody().children);
     bullet.destroy();
     bandit.destroy();
-    console.log('count after', this.bandit.getBody().children);
   }
 
   playerPickupGold(player, gold) {

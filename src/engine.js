@@ -1,6 +1,7 @@
 export default class Engine {
-  constructor (game) {
+  constructor (game, wheels) {
     this.game = game;
+    this.wheels = wheels;
   }
 
   preload () {
@@ -32,6 +33,10 @@ export default class Engine {
       repeat: -1
     });
 
+    this.wheels.addWheel(x - 133, 197);
+    this.wheels.addWheel(x + 50, 197);
+    let hydraulics = this.game.add.sprite(x - 40, 182, 'hydraulics');
+    hydraulics.setDepth(6);
 
     this.engine.anims.play('engine-anim');
 

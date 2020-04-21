@@ -116,8 +116,9 @@ export default class TrainCars {
         if (layout.bandits) {
           for (let i = 0; i < 13; i++) {
             if (Math.random() < 0.1) {
-              let from = x;
-              let to = x + (Math.random() * 260);
+              //let from = x;
+              let from = x + (Math.random() * 260) - 130;
+              let to = x + (Math.random() * 260) - 130;
               let bandit = this.bandit.spawn(from, to);
             }
           }
