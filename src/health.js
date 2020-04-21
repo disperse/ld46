@@ -4,7 +4,7 @@ export default class Health {
 
   constructor (game) {
     this.game = game;
-    this.health = 3.0;
+    this.health = 6;
     this.healthSprites = [];
     this.updateCount = 0;
   }

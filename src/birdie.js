@@ -6,7 +6,7 @@ export default class Birdie {
   }
 
   preload () {
-    this.game.load.spritesheet('birdie', '../assets/birdie_40x10.png', { frameWidth: 10, frameHeight: 10 });
+    this.game.load.spritesheet('birdie', 'assets/birdie_40x10.png', { frameWidth: 10, frameHeight: 10 });
   }
 
   create () {

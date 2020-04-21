@@ -5,7 +5,7 @@ export default class Tnt {
   }
 
   preload () {
-    this.game.load.image('tnt', '../assets/tnt_10x10.png');
+    this.game.load.image('tnt', 'assets/tnt_10x10.png');
   }
 
   create () {

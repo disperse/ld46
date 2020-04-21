@@ -2,7 +2,7 @@ export default class Ammo {
 
   constructor (game) {
     this.game = game;
-    this.ammo = 3;
+    this.ammo = 6;
     this.ammoSprites = [];
     this.updateCount = 0;
   }

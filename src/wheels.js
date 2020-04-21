@@ -7,8 +7,8 @@ export default class Wheels {
   }
 
   preload () {
-    //this.game.load.image('wheel', '../assets/wheel-3_33x33.png');
-    this.game.load.image('wheels', '../assets/wheels_100x33.png');
+    //this.game.load.image('wheel', 'assets/wheel-3_33x33.png');
+    this.game.load.image('wheels', 'assets/wheels_100x33.png');
   }
 
   create () {

@@ -6,7 +6,7 @@ export default class Background {
   }
 
   preload () {
-    this.game.load.image('background', '../assets/sky.png');
+    this.game.load.image('background', 'assets/sky.png');
   }
 
   create () {

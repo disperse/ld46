@@ -4,10 +4,10 @@ export default class Engine {
   }
 
   preload () {
-    this.game.load.spritesheet('engine', '../assets/engine-2.png', {frameHeight: 205, frameWidth: 366});
-    this.game.load.image('wall', '../assets/wall_2x200.png');
-    this.game.load.image('coal-bucket', '../assets/coal-bucket.png');
-    this.game.load.image('coal', '../assets/coal_40x6.png');
+    this.game.load.spritesheet('engine', 'assets/engine-2.png', {frameHeight: 205, frameWidth: 366});
+    this.game.load.image('wall', 'assets/wall_2x200.png');
+    this.game.load.image('coal-bucket', 'assets/coal-bucket.png');
+    this.game.load.image('coal', 'assets/coal_40x6.png');
   }
 
   create () {

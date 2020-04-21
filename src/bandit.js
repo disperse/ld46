@@ -4,7 +4,6 @@ export default class Bandit {
   constructor (game, bullets) {
     this.game = game;
     this.updateCount = 0;
-    this.bandits = [];
     this.bullets = bullets;
   }
 
@@ -14,7 +13,7 @@ export default class Bandit {
   }
 
   preload () {
-    this.game.load.spritesheet('bandit', '../assets/bandit_144x18.png', { frameWidth: 16, frameHeight: 18 });
+    this.game.load.spritesheet('bandit', 'assets/bandit_144x18.png', { frameWidth: 16, frameHeight: 18 });
   }
 
   create () {
@@ -52,7 +51,6 @@ export default class Bandit {
     bandit.movingFrom = from;
     bandit.movingTo = to;
     bandit.nextShot = (Math.random() * 180) + 180;
-    this.bandits.push(bandit);
   }
 
   shoot (x, movingLeft) {

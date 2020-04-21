@@ -27,7 +27,7 @@ export default class Saboteur {
   }
 
   preload () {
-    this.game.load.spritesheet('saboteur', '../assets/saboteur_144x18.png', { frameWidth: 16, frameHeight: 18 });
+    this.game.load.spritesheet('saboteur', 'assets/saboteur_144x18.png', { frameWidth: 16, frameHeight: 18 });
   }
 
   create () {
@@ -107,6 +107,11 @@ export default class Saboteur {
         this.tnt.addTnt(this.saboteur.x, 75);
         this.bombSet = true;
         this.timeLeft = defaultBombTimer;
+        if (this.saboteur.x < 750) {
+          this.timeLeft = defaultBombTimer * 2;
+        } else if (this.saboteur.x < 1500) {
+          this.timeLeft = defaultBombTimer * 1.5;
+        }
         this.movingTo = (Math.random() < 0.5) ? minMovingFrom : maxMovingTo;
         return;
       }

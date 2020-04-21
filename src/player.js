@@ -24,12 +24,12 @@ export default class Player {
   }
 
   preload () {
-    this.game.load.spritesheet('player-shoveling', '../assets/shovel.png', { frameWidth: 16, frameHeight: 17 });
-    this.game.load.spritesheet('player', '../assets/player_144x17_v2.png', { frameWidth: 16, frameHeight: 17 });
-    this.game.load.spritesheet('death', '../assets/death_animation.png', { frameWidth: 16, frameHeight: 17 });
-    this.game.load.audio('jump', ['../assets/jump.ogg']);
-    this.game.load.audio('shovel', ['../assets/shovel.ogg']);
-    this.game.load.image('coal-brick', '../assets/coal-brick.png');
+    this.game.load.spritesheet('player-shoveling', 'assets/shovel.png', { frameWidth: 16, frameHeight: 17 });
+    this.game.load.spritesheet('player', 'assets/player_144x17_v2.png', { frameWidth: 16, frameHeight: 17 });
+    this.game.load.spritesheet('death', 'assets/death_animation.png', { frameWidth: 16, frameHeight: 17 });
+    this.game.load.audio('jump', ['assets/jump.ogg']);
+    this.game.load.audio('shovel', ['assets/shovel.ogg']);
+    this.game.load.image('coal-brick', 'assets/coal-brick.png');
   }
 
   create (x) {

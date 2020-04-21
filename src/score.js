@@ -13,7 +13,7 @@ export default class Score {
   }
 
   preload () {
-    //this.game.load.bitmapFont('font', '../assets/font.png', '../assets/font.fnt');
+    //this.game.load.bitmapFont('font', 'assets/font.png', 'assets/font.fnt');
   }
 
   create () {

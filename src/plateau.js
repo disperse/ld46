@@ -6,7 +6,7 @@ export default class Plateau {
   }
 
   preload () {
-    this.game.load.image('plateau', '../assets/plateau_640x239.png');
+    this.game.load.image('plateau', 'assets/plateau_640x239.png');
   }
 
   create () {

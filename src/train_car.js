@@ -83,16 +83,16 @@ export default class TrainCars {
   }
 
   preload () {
-    this.game.load.image('caboose', '../assets/caboose-2.png');
-    this.game.load.image('passenger_car', '../assets/passenger-car-2_300x125.png');
-    this.game.load.image('coal_car', '../assets/coal-car_300x52.png');
-    this.game.load.spritesheet('cargo_car', '../assets/cargo-car_2400x250.png', { frameWidth: 300, frameHeight: 125 });
-    this.game.load.spritesheet('tables', '../assets/tables_160x40.png', { frameWidth: 40, frameHeight: 40 });
-    this.game.load.image('ground', '../assets/platform_200x2.png');
-    this.game.load.image('hitch', '../assets/hitch-2.png');
-    this.game.load.image('hydraulics', '../assets/hydraulics_100x33.png');
-    this.game.load.image('chandelier', '../assets/chandelier-40x40.png');
-    this.game.load.image('lamp', '../assets/lamp2.png');
+    this.game.load.image('caboose', 'assets/caboose-2.png');
+    this.game.load.image('passenger_car', 'assets/passenger-car-2_300x125.png');
+    this.game.load.image('coal_car', 'assets/coal-car_300x52.png');
+    this.game.load.spritesheet('cargo_car', 'assets/cargo-car_2400x250.png', { frameWidth: 300, frameHeight: 125 });
+    this.game.load.spritesheet('tables', 'assets/tables_160x40.png', { frameWidth: 40, frameHeight: 40 });
+    this.game.load.image('ground', 'assets/platform_200x2.png');
+    this.game.load.image('hitch', 'assets/hitch-2.png');
+    this.game.load.image('hydraulics', 'assets/hydraulics_100x33.png');
+    this.game.load.image('chandelier', 'assets/chandelier-40x40.png');
+    this.game.load.image('lamp', 'assets/lamp2.png');
   }
 
   create () {
@@ -102,7 +102,7 @@ export default class TrainCars {
 
   update () {
     this.updateCount++;
-    if (this.updateCount % 1800 < 1) {
+    if ((this.updateCount % 2700) === 0) {
       this.respawn();
     }
   }
@@ -113,6 +113,15 @@ export default class TrainCars {
       let layout = layouts[i];
       if ((layout.spawn === undefined || layout.spawn) && (Math.random() < respawnChance)) {
         this.spawn(x);
+        if (layout.bandits) {
+          for (let i = 0; i < 13; i++) {
+            if (Math.random() < 0.1) {
+              let from = x;
+              let to = x + (Math.random() * 260);
+              let bandit = this.bandit.spawn(from, to);
+            }
+          }
+        }
       }
     }
   }

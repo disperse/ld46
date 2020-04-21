@@ -7,8 +7,8 @@ export default class Foreground {
   }
 
   preload () {
-    this.game.load.image('bush', '../assets/bush_64x64.png');
-    this.game.load.image('foreground', '../assets/foreground_640x64.png');
+    this.game.load.image('bush', 'assets/bush_64x64.png');
+    this.game.load.image('foreground', 'assets/foreground_640x64.png');
   }
 
   create () {

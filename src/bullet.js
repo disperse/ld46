@@ -5,7 +5,7 @@ export default class Bullet {
   }
 
   preload () {
-    this.game.load.spritesheet('bullet', '../assets/bullet_8x3.png', { frameWidth: 4, frameHeight: 3 });
+    this.game.load.spritesheet('bullet', 'assets/bullet_8x3.png', { frameWidth: 4, frameHeight: 3 });
   }
 
   create () {

@@ -47,19 +47,19 @@ export default class GameScene extends Phaser.Scene {
   preload() {
     this.greyscalePipeline = this.game.renderer.addPipeline('Greyscale', new GreyscalePipeline(this.game));
     this.icons = this.load.spritesheet('icons', 'assets/icons-2_128x64.png', { frameWidth: 16, frameHeight: 16 });
-    this.load.audio('music', ['../assets/scott-joplin-ragtime-dance.mp3']);
-    this.load.audio('death-music', ['../assets/bessie-smith-my-sweetie-went-away.mp3']);
-    this.load.audio('train', ['../assets/steam-train.ogg']);
-    this.load.audio('pickup-gold', ['../assets/pickup_gold.ogg']);
-    this.load.audio('pickup-gold-bars', ['../assets/pickup-gold-bars.ogg']);
-    this.load.audio('pickup-money-bag', ['../assets/pickup-money-bag.ogg']);
-    this.load.audio('pickup-bullets', ['../assets/pickup-bullets.ogg']);
-    this.load.audio('pickup-food', ['../assets/pickup-food.ogg']);
-    this.load.audio('timer-beep', ['../assets/timer-beep.ogg']);
-    this.load.audio('bomb-disarm', ['../assets/bomb-disarm.ogg']);
-    this.load.audio('explosion', ['../assets/explosion.ogg']);
-    this.load.audio('hurt', ['../assets/hurt.ogg']);
-    this.load.audio('shoot', ['../assets/shoot.ogg']);
+    this.load.audio('music', ['assets/scott-joplin-ragtime-dance.mp3']);
+    this.load.audio('death-music', ['assets/bessie-smith-my-sweetie-went-away.mp3']);
+    this.load.audio('train', ['assets/steam-train.ogg']);
+    this.load.audio('pickup-gold', ['assets/pickup_gold.ogg']);
+    this.load.audio('pickup-gold-bars', ['assets/pickup-gold-bars.ogg']);
+    this.load.audio('pickup-money-bag', ['assets/pickup-money-bag.ogg']);
+    this.load.audio('pickup-bullets', ['assets/pickup-bullets.ogg']);
+    this.load.audio('pickup-food', ['assets/pickup-food.ogg']);
+    this.load.audio('timer-beep', ['assets/timer-beep.ogg']);
+    this.load.audio('bomb-disarm', ['assets/bomb-disarm.ogg']);
+    this.load.audio('explosion', ['assets/explosion.ogg']);
+    this.load.audio('hurt', ['assets/hurt.ogg']);
+    this.load.audio('shoot', ['assets/shoot.ogg']);
     this.bullets.preload();
     this.background.preload();
     this.birdie.preload();
@@ -169,6 +169,8 @@ export default class GameScene extends Phaser.Scene {
     this.saboteur.update();
     this.steam.update();
     this.bullets.update();
+    this.trainCars.update();
+    this.gold.update();
   }
 
   playerDisarmBomb(player, tnt) {
@@ -193,8 +195,10 @@ export default class GameScene extends Phaser.Scene {
   }
 
   banditShot(bandit, bullet) {
+    console.log('count before', this.bandit.getBody().children);
     bullet.destroy();
     bandit.destroy();
+    console.log('count after', this.bandit.getBody().children);
   }
 
   playerPickupGold(player, gold) {
