@@ -81,6 +81,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    this.input.keyboard.on('keydown_R', this.restartGame, this);
     this.cameras.main.setBounds(0, 0, 3600, 225);
     this.physics.world.setBounds(0, 0, 3600, 225);
 
@@ -237,6 +238,17 @@ export default class GameScene extends Phaser.Scene {
     return this.finished;
   }
 
+  restartGame () {
+    location.reload();
+    /*
+    this.registry.destroy(); // destroy registry
+    this.events.off();﻿ // disable all active events
+    this.trainSound.stop();
+    this.music.stop();
+    this.scene.restart();﻿﻿﻿﻿ // restart current scene
+     */
+  }
+
   gameOver(outOfSteam) {
     this.finished = true;
     this.music.stop();
@@ -289,6 +301,15 @@ export default class GameScene extends Phaser.Scene {
       gameOverText3.setOrigin(0.5);
       gameOverText3.setDepth(7);
       gameOverText3.setScrollFactor(0);
+
+      let gameOverText4 = this.add.text(200, 130, "Press R to restart.", {
+        font: '16px courier',
+        fill: '#000000',
+        align: 'center'
+      });
+      gameOverText4.setOrigin(0.5);
+      gameOverText4.setDepth(7);
+      gameOverText4.setScrollFactor(0);
     }, 1500);
   }
 
